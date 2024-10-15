@@ -1,6 +1,6 @@
 ;--------------------------------------------------------
-; File Created by SDCC : free open source ISO C Compiler 
-; Version 4.3.0 #14184 (MINGW32)
+; File Created by SDCC : free open source ANSI-C Compiler
+; Version 4.1.0 #12072 (MINGW64)
 ;--------------------------------------------------------
 	.module main
 	.optsdcc -mmcs51 --model-small
@@ -229,12 +229,12 @@ _hall_cnt::
 _hall_last_state::
 	.ds 1
 ;--------------------------------------------------------
-; overlayable items in internal ram
+; overlayable items in internal ram 
 ;--------------------------------------------------------
 ;--------------------------------------------------------
-; Stack segment in internal ram
+; Stack segment in internal ram 
 ;--------------------------------------------------------
-	.area SSEG
+	.area	SSEG
 __start__stack:
 	.ds	1
 
@@ -256,7 +256,7 @@ __start__stack:
 ;--------------------------------------------------------
 	.area PSEG    (PAG,XDATA)
 ;--------------------------------------------------------
-; uninitialized external ram data
+; external ram data
 ;--------------------------------------------------------
 	.area XSEG    (XDATA)
 ;--------------------------------------------------------
@@ -264,7 +264,7 @@ __start__stack:
 ;--------------------------------------------------------
 	.area XABS    (ABS,XDATA)
 ;--------------------------------------------------------
-; initialized external ram data
+; external initialized ram data
 ;--------------------------------------------------------
 	.area XISEG   (XDATA)
 	.area HOME    (CODE)
@@ -278,7 +278,7 @@ __start__stack:
 	.area GSFINAL (CODE)
 	.area CSEG    (CODE)
 ;--------------------------------------------------------
-; interrupt vector
+; interrupt vector 
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 __interrupt_vect:

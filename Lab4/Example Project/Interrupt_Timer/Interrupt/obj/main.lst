@@ -1,6 +1,6 @@
                                       1 ;--------------------------------------------------------
-                                      2 ; File Created by SDCC : free open source ISO C Compiler 
-                                      3 ; Version 4.3.0 #14184 (MINGW32)
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.1.0 #12072 (MINGW64)
                                       4 ;--------------------------------------------------------
                                       5 	.module main
                                       6 	.optsdcc -mmcs51 --model-small
@@ -225,12 +225,12 @@
       000000                        225 _cnt::
       000000                        226 	.ds 2
                                     227 ;--------------------------------------------------------
-                                    228 ; overlayable items in internal ram
+                                    228 ; overlayable items in internal ram 
                                     229 ;--------------------------------------------------------
                                     230 ;--------------------------------------------------------
-                                    231 ; Stack segment in internal ram
+                                    231 ; Stack segment in internal ram 
                                     232 ;--------------------------------------------------------
-                                    233 	.area SSEG
+                                    233 	.area	SSEG
       000000                        234 __start__stack:
       000000                        235 	.ds	1
                                     236 
@@ -252,7 +252,7 @@
                                     252 ;--------------------------------------------------------
                                     253 	.area PSEG    (PAG,XDATA)
                                     254 ;--------------------------------------------------------
-                                    255 ; uninitialized external ram data
+                                    255 ; external ram data
                                     256 ;--------------------------------------------------------
                                     257 	.area XSEG    (XDATA)
                                     258 ;--------------------------------------------------------
@@ -260,7 +260,7 @@
                                     260 ;--------------------------------------------------------
                                     261 	.area XABS    (ABS,XDATA)
                                     262 ;--------------------------------------------------------
-                                    263 ; initialized external ram data
+                                    263 ; external initialized ram data
                                     264 ;--------------------------------------------------------
                                     265 	.area XISEG   (XDATA)
                                     266 	.area HOME    (CODE)
@@ -274,7 +274,7 @@
                                     274 	.area GSFINAL (CODE)
                                     275 	.area CSEG    (CODE)
                                     276 ;--------------------------------------------------------
-                                    277 ; interrupt vector
+                                    277 ; interrupt vector 
                                     278 ;--------------------------------------------------------
                                     279 	.area HOME    (CODE)
       000000                        280 __interrupt_vect:

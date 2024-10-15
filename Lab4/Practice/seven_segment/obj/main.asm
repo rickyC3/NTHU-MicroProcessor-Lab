@@ -10,6 +10,8 @@
 ;--------------------------------------------------------
 	.globl _main
 	.globl _T0_isr
+	.globl _Initial
+	.globl _Write7219
 	.globl _CY
 	.globl _AC
 	.globl _F0
@@ -106,7 +108,12 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _decoder
+	.globl _ans
 	.globl _cnt
+	.globl _hall_last_state
+	.globl _hall_ms
+	.globl _Display
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -219,11 +226,33 @@ _CY	=	0x00d7
 	.area REG_BANK_0	(REL,OVR,DATA)
 	.ds 8
 ;--------------------------------------------------------
+; overlayable bit register bank
+;--------------------------------------------------------
+	.area BIT_BANK	(REL,OVR,DATA)
+bits:
+	.ds 1
+	b0 = bits[0]
+	b1 = bits[1]
+	b2 = bits[2]
+	b3 = bits[3]
+	b4 = bits[4]
+	b5 = bits[5]
+	b6 = bits[6]
+	b7 = bits[7]
+;--------------------------------------------------------
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
+_hall_ms::
+	.ds 2
+_hall_last_state::
+	.ds 1
 _cnt::
 	.ds 2
+_ans::
+	.ds 2
+_decoder::
+	.ds 10
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -295,10 +324,30 @@ __interrupt_vect:
 	.globl __mcs51_genXINIT
 	.globl __mcs51_genXRAMCLEAR
 	.globl __mcs51_genRAMCLEAR
-;	./src/main.c:3: int cnt = 0;							// Global variable for interrupt routine
+;	./src/main.c:8: int hall_ms = 0;									// counter of the time elapsed
 	clr	a
+	mov	_hall_ms,a
+	mov	(_hall_ms + 1),a
+;	./src/main.c:9: char hall_last_state = 0;							// Record activation and deactivation of Hall sensor
+;	1-genFromRTrack replaced	mov	_hall_last_state,#0x00
+	mov	_hall_last_state,a
+;	./src/main.c:10: int cnt = 0;
 	mov	_cnt,a
 	mov	(_cnt + 1),a
+;	./src/main.c:11: int ans = 0;
+	mov	_ans,a
+	mov	(_ans + 1),a
+;	./src/main.c:13: char decoder[10] = {
+	mov	_decoder,#0x7e
+	mov	(_decoder + 0x0001),#0x30
+	mov	(_decoder + 0x0002),#0x6d
+	mov	(_decoder + 0x0003),#0x79
+	mov	(_decoder + 0x0004),#0x33
+	mov	(_decoder + 0x0005),#0x5b
+	mov	(_decoder + 0x0006),#0x5f
+	mov	(_decoder + 0x0007),#0x70
+	mov	(_decoder + 0x0008),#0x7f
+	mov	(_decoder + 0x0009),#0x7b
 	.area GSFINAL (CODE)
 	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
@@ -316,7 +365,7 @@ __sdcc_program_startup:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'T0_isr'
 ;------------------------------------------------------------
-;	./src/main.c:5: void T0_isr(void) __interrupt (1)			// Interrupt routine w/ priority 1
+;	./src/main.c:28: void T0_isr(void) __interrupt (1)						// Interrupt routine w/ priority 1
 ;	-----------------------------------------
 ;	 function T0_isr
 ;	-----------------------------------------
@@ -329,70 +378,208 @@ _T0_isr:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
+	push	bits
 	push	acc
+	push	b
+	push	dpl
+	push	dph
+	push	(0+7)
+	push	(0+6)
+	push	(0+5)
+	push	(0+4)
+	push	(0+3)
+	push	(0+2)
+	push	(0+1)
+	push	(0+0)
 	push	psw
-;	./src/main.c:8: TH0 = (65536-1000) / 256;			// Reset higher 8 bits of Timer 0
+	mov	psw,#0x00
+;	./src/main.c:30: TH0 = (65536-1000) / 256;			// Reset higher 8 bits of Timer 0
 	mov	_TH0,#0xfc
-;	./src/main.c:9: TL0 = (65536-1000) % 256;			// Reset lower 8 bits of Timer 0
+;	./src/main.c:31: TL0 = (65536-1000) % 256;			// Reset lower 8 bits of Timer 0
 	mov	_TL0,#0x18
-;	./src/main.c:11: cnt++;								// Count each interruption
-	inc	_cnt
-	clr	a
-	cjne	a,_cnt,00109$
-	inc	(_cnt + 1)
-00109$:
-;	./src/main.c:12: if(cnt >= 1000) {						// 1000 interruptions = 1000ms = 1s
-	clr	c
-	mov	a,_cnt
-	subb	a,#0xe8
-	mov	a,(_cnt + 1)
-	xrl	a,#0x80
-	subb	a,#0x83
-	jc	00103$
-;	./src/main.c:13: cnt = 0;						// Reset count
+;	./src/main.c:33: if (hall_last_state == 1 && Hall_In == 0){
+	mov	a,#0x01
+	cjne	a,_hall_last_state,00102$
+	jb	_P2_4,00102$
+;	./src/main.c:34: ans = cnt;
+	mov	_ans,_cnt
+	mov	(_ans + 1),(_cnt + 1)
+;	./src/main.c:35: cnt = 0;
 	clr	a
 	mov	_cnt,a
 	mov	(_cnt + 1),a
-;	./src/main.c:14: P1 = ~P1;						// Reverse wave signal
-	mov	a,_P1
-	cpl	a
-	mov	_P1,a
+;	./src/main.c:36: Display();
+	lcall	_Display
+	sjmp	00103$
+00102$:
+;	./src/main.c:38: cnt++;
+	inc	_cnt
+	clr	a
+	cjne	a,_cnt,00118$
+	inc	(_cnt + 1)
+00118$:
 00103$:
-;	./src/main.c:16: }
+;	./src/main.c:39: }hall_last_state = Hall_In;
+	mov	c,_P2_4
+	clr	a
+	rlc	a
+	mov	_hall_last_state,a
+;	./src/main.c:43: }
 	pop	psw
+	pop	(0+0)
+	pop	(0+1)
+	pop	(0+2)
+	pop	(0+3)
+	pop	(0+4)
+	pop	(0+5)
+	pop	(0+6)
+	pop	(0+7)
+	pop	dph
+	pop	dpl
+	pop	b
 	pop	acc
+	pop	bits
 	reti
-;	eliminated unneeded mov psw,# (no regs used in bank)
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;	./src/main.c:18: void main(void)
+;	./src/main.c:45: int main(void) {		
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	./src/main.c:21: TMOD = 0x01;						// Set Timer 1 to  mode 0 & Timer 0 mode 1. (16-bit timer)
+;	./src/main.c:48: TMOD = 0x01;											// Set Timer 1 to  mode 0 & T imer 0 mode 1. (16-bit timer)
 	mov	_TMOD,#0x01
-;	./src/main.c:22: TH0 = (65536-1000) / 256;			// Load initial higher 8 bits into Timer 0
+;	./src/main.c:49: TH0 = (65536-1000) / 256;					// Load initial higher 8 bits into Timer 0
 	mov	_TH0,#0xfc
-;	./src/main.c:23: TL0 = (65536-1000) % 256;			// Load initial lower 8 bits into Timer 0
+;	./src/main.c:50: TL0 = (65536-1000) % 256;					// Load initial lower 8 bits into Timer 0
 	mov	_TL0,#0x18
-;	./src/main.c:24: ET0 = 1;							// Enable Timer 0 interrupt
+;	./src/main.c:51: ET0 = 1;													// Enable Timer 0 interrupt
 ;	assignBit
 	setb	_ET0
-;	./src/main.c:25: EA = 1;								// Enable all interrupt
+;	./src/main.c:52: EA = 1;														// Enable all interrupt
 ;	assignBit
 	setb	_EA
-;	./src/main.c:26: TR0 = 1;							// Start Timer 0
+;	./src/main.c:53: TR0 = 1;													// Start Timer 0
 ;	assignBit
 	setb	_TR0
-;	./src/main.c:29: while(1);
+;	./src/main.c:54: Initial();                  			//MAX7219 initialize
+	lcall	_Initial
+;	./src/main.c:55: cnt = 0;
+	clr	a
+	mov	_cnt,a
+	mov	(_cnt + 1),a
+;	./src/main.c:56: Hall_In = 1;              // Initialize Hall sensor signal (deactivated)
+;	assignBit
+	setb	_P2_4
+;	./src/main.c:58: while(1){
 00102$:
-;	./src/main.c:30: }
+;	./src/main.c:62: }
 	sjmp	00102$
+;------------------------------------------------------------
+;Allocation info for local variables in function 'Display'
+;------------------------------------------------------------
+;i                         Allocated to registers r7 
+;------------------------------------------------------------
+;	./src/main.c:64: void Display(void){
+;	-----------------------------------------
+;	 function Display
+;	-----------------------------------------
+_Display:
+;	./src/main.c:66: Write7219(1, decoder[ans%10]);ans/=10;
+	mov	__modsint_PARM_2,#0x0a
+	mov	(__modsint_PARM_2 + 1),#0x00
+	mov	dpl,_ans
+	mov	dph,(_ans + 1)
+	lcall	__modsint
+	mov	r6,dpl
+	mov	a,r6
+	add	a,#_decoder
+	mov	r1,a
+	mov	_Write7219_PARM_2,@r1
+	mov	dpl,#0x01
+	lcall	_Write7219
+	mov	__divsint_PARM_2,#0x0a
+	mov	(__divsint_PARM_2 + 1),#0x00
+	mov	dpl,_ans
+	mov	dph,(_ans + 1)
+	lcall	__divsint
+	mov	_ans,dpl
+	mov	(_ans + 1),dph
+;	./src/main.c:67: for (i = 2;i<9;i++){
+	mov	r7,#0x02
+00108$:
+;	./src/main.c:69: if (i == 4)Write7219(i, decoder[ans%10] | 0b10000000);
+	cjne	r7,#0x04,00105$
+	mov	__modsint_PARM_2,#0x0a
+	mov	(__modsint_PARM_2 + 1),#0x00
+	mov	dpl,_ans
+	mov	dph,(_ans + 1)
+	push	ar7
+	lcall	__modsint
+	mov	r5,dpl
+	pop	ar7
+	mov	a,r5
+	add	a,#_decoder
+	mov	r1,a
+	mov	ar6,@r1
+	mov	a,#0x80
+	orl	a,r6
+	mov	_Write7219_PARM_2,a
+	mov	dpl,r7
+	push	ar7
+	lcall	_Write7219
+	pop	ar7
+	sjmp	00106$
+00105$:
+;	./src/main.c:70: else if (ans) Write7219(i, decoder[ans%10] );
+	mov	a,_ans
+	orl	a,(_ans + 1)
+	jz	00102$
+	mov	__modsint_PARM_2,#0x0a
+	mov	(__modsint_PARM_2 + 1),#0x00
+	mov	dpl,_ans
+	mov	dph,(_ans + 1)
+	push	ar7
+	lcall	__modsint
+	mov	r5,dpl
+	pop	ar7
+	mov	a,r5
+	add	a,#_decoder
+	mov	r1,a
+	mov	_Write7219_PARM_2,@r1
+	mov	dpl,r7
+	push	ar7
+	lcall	_Write7219
+	pop	ar7
+	sjmp	00106$
+00102$:
+;	./src/main.c:71: else Write7219(i, 0x00);
+	mov	_Write7219_PARM_2,#0x00
+	mov	dpl,r7
+	push	ar7
+	lcall	_Write7219
+	pop	ar7
+00106$:
+;	./src/main.c:72: ans/=10;
+	mov	__divsint_PARM_2,#0x0a
+	mov	(__divsint_PARM_2 + 1),#0x00
+	mov	dpl,_ans
+	mov	dph,(_ans + 1)
+	push	ar7
+	lcall	__divsint
+	mov	_ans,dpl
+	mov	(_ans + 1),dph
+	pop	ar7
+;	./src/main.c:67: for (i = 2;i<9;i++){
+	inc	r7
+	cjne	r7,#0x09,00128$
+00128$:
+	jnc	00129$
+	ljmp	00108$
+00129$:
+;	./src/main.c:76: }
+	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)

@@ -1,4 +1,4 @@
-ASxxxx Linker V03.00/V05.40 + sdld,  page 1.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -57,7 +57,7 @@ C:   00000014  s_GSINIT1
 C:   00000014  s_GSINIT2                       
 C:   00000018  s_BIT_BANK                      
 C:   00000018  s_OSEG                          
-ASxxxx Linker V03.00/V05.40 + sdld,  page 2.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -84,7 +84,7 @@ C:   000000B5  s_XINIT
 C:   000000F6  l_SSEG                          
 C:   00000100  l_IRAM                          
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 3.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -143,7 +143,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000A0  _P2                                main
      000000A0  _P2_0                              main
      000000A0  __XPAGE                            
-ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -201,7 +201,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000E0  _ACC                               main
      000000F0  _B                                 main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 5.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -210,7 +210,7 @@ REG_BANK_0                          00000000    00000008 =           8. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00/V05.40 + sdld,  page 6.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -221,7 +221,7 @@ DSEG                                00000000    00000080 =         128. bytes (R
       -----  --------------------------------   ------------------------
      00000008  _cnt                               main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 7.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 7.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -232,7 +232,7 @@ SSEG                                0000000A    000000F6 =         246. bytes (R
       -----  --------------------------------   ------------------------
      0000000A  __start__stack                     main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 8.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 8.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -243,7 +243,7 @@ HOME                                00000000    00000011 =          17. bytes (R
       -----  --------------------------------   ------------------------
 C:   0000000E  __sdcc_program_startup             main
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 9.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 9.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -254,7 +254,7 @@ GSINIT0                             00000011    00000003 =           3. bytes (R
       -----  --------------------------------   ------------------------
 C:   00000011  __sdcc_gsinit_startup              
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 10.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 10.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -263,7 +263,7 @@ GSINIT2                             00000014    0000000A =          10. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00/V05.40 + sdld,  page 11.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 11.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -274,7 +274,7 @@ GSINIT3                             0000001E    00000022 =          34. bytes (R
       -----  --------------------------------   ------------------------
 C:   0000001E  __mcs51_genXINIT                   
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 12.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -286,7 +286,7 @@ GSINIT4                             00000040    0000002A =          42. bytes (R
 C:   00000040  __mcs51_genRAMCLEAR                
 C:   00000046  __mcs51_genXRAMCLEAR               
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 13.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 13.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -295,7 +295,7 @@ GSINIT                              0000006A    00000005 =           5. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00/V05.40 + sdld,  page 14.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 14.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -304,7 +304,7 @@ GSFINAL                             0000006F    00000003 =           3. bytes (R
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-ASxxxx Linker V03.00/V05.40 + sdld,  page 15.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 15.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
@@ -315,8 +315,8 @@ CSEG                                00000072    00000043 =          67. bytes (R
       -----  --------------------------------   ------------------------
 C:   00000072  _T0_isr                            main
 C:   000000A0  _main                              main
-C:   000000B1  ___sdcc_external_startup           _startup
-ASxxxx Linker V03.00/V05.40 + sdld,  page 16.
+C:   000000B1  __sdcc_external_startup            _startup
+ASxxxx Linker V03.00 + NoICE + sdld,  page 16.
 
 Files Linked                              [ module(s) ]
 
@@ -325,20 +325,14 @@ main.rel                                  [  ]
 
 Libraries Linked                          [ object file ]
 
-c:\Program Files (x86)\SDCC\bin\..\lib\small/mcs51.lib
-                                          [ crtclear.rel ]
-c:\Program Files (x86)\SDCC\bin\..\lib\small/mcs51.lib
-                                          [ crtxinit.rel ]
-c:\Program Files (x86)\SDCC\bin\..\lib\small/mcs51.lib
-                                          [ crtxclear.rel ]
-c:\Program Files (x86)\SDCC\bin\..\lib\small/mcs51.lib
-                                          [ crtpagesfr.rel ]
-c:\Program Files (x86)\SDCC\bin\..\lib\small/mcs51.lib
-                                          [ crtstart.rel ]
-c:\Program Files (x86)\SDCC\bin\..\lib\small/libsdcc.lib
-                                          [ _startup.rel ]
+d:\SDCC\bin\..\lib\small/mcs51.lib        [ crtclear.rel ]
+d:\SDCC\bin\..\lib\small/mcs51.lib        [ crtxinit.rel ]
+d:\SDCC\bin\..\lib\small/mcs51.lib        [ crtxclear.rel ]
+d:\SDCC\bin\..\lib\small/mcs51.lib        [ crtpagesfr.rel ]
+d:\SDCC\bin\..\lib\small/mcs51.lib        [ crtstart.rel ]
+d:\SDCC\bin\..\lib\small/libsdcc.lib      [ _startup.rel ]
 
-ASxxxx Linker V03.00/V05.40 + sdld,  page 17.
+ASxxxx Linker V03.00 + NoICE + sdld,  page 17.
 
 User Base Address Definitions
 

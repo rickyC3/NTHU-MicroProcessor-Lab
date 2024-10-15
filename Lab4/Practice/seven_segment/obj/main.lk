@@ -13,5 +13,7 @@
 -l liblong
 -l libfloat
 main.rel
+delay.rel
+seven_segment.rel
 
 -e

@@ -2,14 +2,13 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 4.1.0 #12072 (MINGW64)
 ;--------------------------------------------------------
-	.module main
+	.module seven_segment
 	.optsdcc -mmcs51 --model-small
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main
-	.globl _T0_isr
+	.globl _sendbyte_PARM_2
 	.globl _CY
 	.globl _AC
 	.globl _F0
@@ -106,7 +105,10 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
-	.globl _cnt
+	.globl _Write7219_PARM_2
+	.globl _sendbyte
+	.globl _Write7219
+	.globl _Initial
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -222,18 +224,14 @@ _CY	=	0x00d7
 ; internal ram data
 ;--------------------------------------------------------
 	.area DSEG    (DATA)
-_cnt::
-	.ds 2
+_Write7219_PARM_2:
+	.ds 1
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
-;--------------------------------------------------------
-; Stack segment in internal ram 
-;--------------------------------------------------------
-	.area	SSEG
-__start__stack:
-	.ds	1
-
+	.area	OSEG    (OVR,DATA)
+_sendbyte_PARM_2:
+	.ds 1
 ;--------------------------------------------------------
 ; indirectly addressable internal ram data
 ;--------------------------------------------------------
@@ -274,53 +272,33 @@ __start__stack:
 	.area GSFINAL (CODE)
 	.area CSEG    (CODE)
 ;--------------------------------------------------------
-; interrupt vector 
-;--------------------------------------------------------
-	.area HOME    (CODE)
-__interrupt_vect:
-	ljmp	__sdcc_gsinit_startup
-	reti
-	.ds	7
-	ljmp	_T0_isr
-;--------------------------------------------------------
 ; global & static initialisations
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area GSINIT  (CODE)
 	.area GSFINAL (CODE)
 	.area GSINIT  (CODE)
-	.globl __sdcc_gsinit_startup
-	.globl __sdcc_program_startup
-	.globl __start__stack
-	.globl __mcs51_genXINIT
-	.globl __mcs51_genXRAMCLEAR
-	.globl __mcs51_genRAMCLEAR
-;	./src/main.c:3: int cnt = 0;							// Global variable for interrupt routine
-	clr	a
-	mov	_cnt,a
-	mov	(_cnt + 1),a
-	.area GSFINAL (CODE)
-	ljmp	__sdcc_program_startup
 ;--------------------------------------------------------
 ; Home
 ;--------------------------------------------------------
 	.area HOME    (CODE)
 	.area HOME    (CODE)
-__sdcc_program_startup:
-	ljmp	_main
-;	return from main will return to caller
 ;--------------------------------------------------------
 ; code
 ;--------------------------------------------------------
 	.area CSEG    (CODE)
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'T0_isr'
+;Allocation info for local variables in function 'sendbyte'
 ;------------------------------------------------------------
-;	./src/main.c:5: void T0_isr(void) __interrupt (1)			// Interrupt routine w/ priority 1
+;dat                       Allocated with name '_sendbyte_PARM_2'
+;address                   Allocated to registers r7 
+;i                         Allocated to registers r6 
+;------------------------------------------------------------
+;	./src/seven_segment.c:7: void sendbyte(unsigned char address,unsigned char dat){
 ;	-----------------------------------------
-;	 function T0_isr
+;	 function sendbyte
 ;	-----------------------------------------
-_T0_isr:
+_sendbyte:
 	ar7 = 0x07
 	ar6 = 0x06
 	ar5 = 0x05
@@ -329,70 +307,143 @@ _T0_isr:
 	ar2 = 0x02
 	ar1 = 0x01
 	ar0 = 0x00
-	push	acc
-	push	psw
-;	./src/main.c:8: TH0 = (65536-1000) / 256;			// Reset higher 8 bits of Timer 0
-	mov	_TH0,#0xfc
-;	./src/main.c:9: TL0 = (65536-1000) % 256;			// Reset lower 8 bits of Timer 0
-	mov	_TL0,#0x18
-;	./src/main.c:11: cnt++;								// Count each interruption
-	inc	_cnt
-	clr	a
-	cjne	a,_cnt,00109$
-	inc	(_cnt + 1)
-00109$:
-;	./src/main.c:12: if(cnt >= 1000) {						// 1000 interruptions = 1000ms = 1s
-	clr	c
-	mov	a,_cnt
-	subb	a,#0xe8
-	mov	a,(_cnt + 1)
-	xrl	a,#0x80
-	subb	a,#0x83
-	jc	00103$
-;	./src/main.c:13: cnt = 0;						// Reset count
-	clr	a
-	mov	_cnt,a
-	mov	(_cnt + 1),a
-;	./src/main.c:14: P1 = ~P1;						// Reverse wave signal
-	mov	a,_P1
-	cpl	a
-	mov	_P1,a
+	mov	r7,dpl
+;	./src/seven_segment.c:9: for (i=0;i<8;i++)        //get last 8 bits(address)
+	mov	r6,#0x00
 00103$:
-;	./src/main.c:16: }
-	pop	psw
-	pop	acc
-	reti
-;	eliminated unneeded mov psw,# (no regs used in bank)
-;	eliminated unneeded push/pop dpl
-;	eliminated unneeded push/pop dph
-;	eliminated unneeded push/pop b
+;	./src/seven_segment.c:12: CLK=0;
+;	assignBit
+	clr	_P2_0
+;	./src/seven_segment.c:13: DIN=(address&0x80);   //get msb and shift left
+	mov	a,r7
+	rl	a
+	anl	a,#0x01
+;	assignBit
+	add	a,#0xff
+	mov	_P2_2,c
+;	./src/seven_segment.c:14: address<<=1;
+	mov	ar5,r7
+	mov	a,r5
+	add	a,r5
+	mov	r7,a
+;	./src/seven_segment.c:15: CLK=1;
+;	assignBit
+	setb	_P2_0
+;	./src/seven_segment.c:9: for (i=0;i<8;i++)        //get last 8 bits(address)
+	inc	r6
+	cjne	r6,#0x08,00123$
+00123$:
+	jc	00103$
+;	./src/seven_segment.c:18: for (i=0;i<8;i++)      //get first 8 bits(data)
+	mov	r7,#0x00
+00105$:
+;	./src/seven_segment.c:20: CLK=0;
+;	assignBit
+	clr	_P2_0
+;	./src/seven_segment.c:21: DIN=(dat&0x80);    //get msb and shit left
+	mov	a,_sendbyte_PARM_2
+	rl	a
+	anl	a,#0x01
+;	assignBit
+	add	a,#0xff
+	mov	_P2_2,c
+;	./src/seven_segment.c:22: dat<<=1;
+	mov	a,_sendbyte_PARM_2
+	add	a,acc
+	mov	_sendbyte_PARM_2,a
+;	./src/seven_segment.c:23: CLK=1;
+;	assignBit
+	setb	_P2_0
+;	./src/seven_segment.c:18: for (i=0;i<8;i++)      //get first 8 bits(data)
+	inc	r7
+	cjne	r7,#0x08,00125$
+00125$:
+	jc	00105$
+;	./src/seven_segment.c:25: }
+	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'main'
+;Allocation info for local variables in function 'Write7219'
 ;------------------------------------------------------------
-;	./src/main.c:18: void main(void)
+;dat                       Allocated with name '_Write7219_PARM_2'
+;address                   Allocated to registers r7 
+;cnt                       Allocated to registers r6 
+;------------------------------------------------------------
+;	./src/seven_segment.c:28: void Write7219(unsigned char address,unsigned char dat)
 ;	-----------------------------------------
-;	 function main
+;	 function Write7219
 ;	-----------------------------------------
-_main:
-;	./src/main.c:21: TMOD = 0x01;						// Set Timer 1 to  mode 0 & Timer 0 mode 1. (16-bit timer)
-	mov	_TMOD,#0x01
-;	./src/main.c:22: TH0 = (65536-1000) / 256;			// Load initial higher 8 bits into Timer 0
-	mov	_TH0,#0xfc
-;	./src/main.c:23: TL0 = (65536-1000) % 256;			// Load initial lower 8 bits into Timer 0
-	mov	_TL0,#0x18
-;	./src/main.c:24: ET0 = 1;							// Enable Timer 0 interrupt
+_Write7219:
+	mov	r7,dpl
+;	./src/seven_segment.c:31: LOAD=0;
 ;	assignBit
-	setb	_ET0
-;	./src/main.c:25: EA = 1;								// Enable all interrupt
-;	assignBit
-	setb	_EA
-;	./src/main.c:26: TR0 = 1;							// Start Timer 0
-;	assignBit
-	setb	_TR0
-;	./src/main.c:29: while(1);
+	clr	_P2_1
+;	./src/seven_segment.c:32: for(cnt=1;cnt<=matrixnum;cnt++)      //send address and data according to the nuber of your matrix
+	mov	r6,#0x01
 00102$:
-;	./src/main.c:30: }
-	sjmp	00102$
+;	./src/seven_segment.c:34: sendbyte(address,dat);
+	mov	_sendbyte_PARM_2,_Write7219_PARM_2
+	mov	dpl,r7
+	push	ar7
+	push	ar6
+	lcall	_sendbyte
+	pop	ar6
+	pop	ar7
+;	./src/seven_segment.c:32: for(cnt=1;cnt<=matrixnum;cnt++)      //send address and data according to the nuber of your matrix
+	inc	r6
+	mov	a,r6
+	add	a,#0xff - 0x01
+	jnc	00102$
+;	./src/seven_segment.c:36: LOAD=1;
+;	assignBit
+	setb	_P2_1
+;	./src/seven_segment.c:37: }
+	ret
+;------------------------------------------------------------
+;Allocation info for local variables in function 'Initial'
+;------------------------------------------------------------
+;i                         Allocated to registers r7 
+;------------------------------------------------------------
+;	./src/seven_segment.c:40: void Initial(void)
+;	-----------------------------------------
+;	 function Initial
+;	-----------------------------------------
+_Initial:
+;	./src/seven_segment.c:43: Write7219(SHUT_DOWN,0x01);         //normal mode(0xX1)
+	mov	_Write7219_PARM_2,#0x01
+	mov	dpl,#0x0c
+	lcall	_Write7219
+;	./src/seven_segment.c:44: Write7219(DISPLAY_TEST,0x00);
+	mov	_Write7219_PARM_2,#0x00
+	mov	dpl,#0x0f
+	lcall	_Write7219
+;	./src/seven_segment.c:45: Write7219(DECODE_MODE,0x00);       //select non-decode mode
+	mov	_Write7219_PARM_2,#0x00
+	mov	dpl,#0x09
+	lcall	_Write7219
+;	./src/seven_segment.c:46: Write7219(SCAN_LIMIT,0x07);        //use all 8 LED
+	mov	_Write7219_PARM_2,#0x07
+	mov	dpl,#0x0b
+	lcall	_Write7219
+;	./src/seven_segment.c:47: Write7219(INTENSITY,0x00);         //set up intensity
+	mov	_Write7219_PARM_2,#0x00
+	mov	dpl,#0x0a
+	lcall	_Write7219
+;	./src/seven_segment.c:49: for(i=1;i<=8;i++){
+	mov	r7,#0x01
+00102$:
+;	./src/seven_segment.c:50: Write7219(i,0x00);   //turn off all LED
+	mov	_Write7219_PARM_2,#0x00
+	mov	dpl,r7
+	push	ar7
+	lcall	_Write7219
+	pop	ar7
+;	./src/seven_segment.c:49: for(i=1;i<=8;i++){
+	inc	r7
+	mov	a,r7
+	add	a,#0xff - 0x08
+	jnc	00102$
+;	./src/seven_segment.c:52: }
+	ret
 	.area CSEG    (CODE)
 	.area CONST   (CODE)
 	.area XINIT   (CODE)
