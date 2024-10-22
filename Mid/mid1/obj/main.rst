@@ -352,8 +352,8 @@
       000085 D0 07            [24]  352 	pop	ar7
                                     353 ;	./src/main.c:53: if (but1 == 1)continue;
       000087 20 B2 E2         [24]  354 	jb	_INT0,00142$
-                                    355 ;	./src/main.c:54: delay_ms(1000);
-      00008A 90 03 E8         [24]  356 	mov	dptr,#0x03e8
+                                    355 ;	./src/main.c:54: delay_ms(500);
+      00008A 90 01 F4         [24]  356 	mov	dptr,#0x01f4
       00008D C0 07            [24]  357 	push	ar7
       00008F C0 06            [24]  358 	push	ar6
       000091 C0 05            [24]  359 	push	ar5
@@ -412,8 +412,8 @@
       0000DE 30 B3 03         [24]  412 	jnb	_INT1,00229$
       0000E1 02 00 6C         [24]  413 	ljmp	00142$
       0000E4                        414 00229$:
-                                    415 ;	./src/main.c:72: delay_ms(1000);
-      0000E4 90 03 E8         [24]  416 	mov	dptr,#0x03e8
+                                    415 ;	./src/main.c:72: delay_ms(500);
+      0000E4 90 01 F4         [24]  416 	mov	dptr,#0x01f4
       0000E7 C0 07            [24]  417 	push	ar7
       0000E9 12 01 39         [24]  418 	lcall	_delay_ms
       0000EC D0 07            [24]  419 	pop	ar7

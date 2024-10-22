@@ -352,8 +352,8 @@ _main:
 	pop	ar7
 ;	./src/main.c:53: if (but1 == 1)continue;
 	jb	_INT0,00142$
-;	./src/main.c:54: delay_ms(1000);
-	mov	dptr,#0x03e8
+;	./src/main.c:54: delay_ms(500);
+	mov	dptr,#0x01f4
 	push	ar7
 	push	ar6
 	push	ar5
@@ -412,8 +412,8 @@ _main:
 	jnb	_INT1,00229$
 	ljmp	00142$
 00229$:
-;	./src/main.c:72: delay_ms(1000);
-	mov	dptr,#0x03e8
+;	./src/main.c:72: delay_ms(500);
+	mov	dptr,#0x01f4
 	push	ar7
 	lcall	_delay_ms
 	pop	ar7

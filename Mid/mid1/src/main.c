@@ -36,8 +36,8 @@ and that both those copyright notices and this permission notice appear in suppo
 void main(void)
 { 
 
-	unsigned char patt = 0x80;	//led value
-	unsigned int prebut1 = 0;	//debounce
+	
+	unsigned char patt = 0x80;	//led valueunsigned int prebut1 = 0;	//debounce
 	unsigned int prebut2 = 0;
 	unsigned int mode;
 	but1 = 1;                 	//initialize
@@ -51,7 +51,7 @@ void main(void)
 		if((but1 == 0) && (prebut1 == 1)) {
             delay_ms(10);
             if (but1 == 1)continue;
-			delay_ms(1000);
+			delay_ms(500);
             
 			if(but1 == 0) { // long press
                 while (but1 == 0);
@@ -69,7 +69,7 @@ void main(void)
 		if((but2 == 0) && (prebut1 == 1)) {
             delay_ms(10);
             if (but2 == 1)continue;
-			delay_ms(1000);
+			delay_ms(500);
 			if(but2 == 0) { // long press
                 while(but2 == 0);
 				if (patt == 0x40)patt = 0x01;
