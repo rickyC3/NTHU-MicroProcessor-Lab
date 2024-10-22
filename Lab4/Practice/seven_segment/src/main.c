@@ -51,7 +51,7 @@ int main(void) {
 	ET0 = 1;													// Enable Timer 0 interrupt
 	EA = 1;														// Enable all interrupt
 	TR0 = 1;													// Start Timer 0
-	Initial();                  			//MAX7219 initialize
+	Initial();                  			   //MAX7219 initialize
 	cnt = 0;
     Hall_In = 1;              // Initialize Hall sensor signal (deactivated)
 	
