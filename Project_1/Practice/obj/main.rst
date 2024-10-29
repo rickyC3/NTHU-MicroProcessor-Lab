@@ -246,7 +246,7 @@
       00000F                        246 	.ds 4
       000013                        247 _opr::
       000013                        248 	.ds 1
-      000014                        249 _Display_num_65536_35:
+      000014                        249 _Display_num_65536_34:
       000014                        250 	.ds 4
                                     251 ;--------------------------------------------------------
                                     252 ; overlayable items in internal ram 
@@ -913,7 +913,7 @@
                                     913 ;------------------------------------------------------------
                                     914 ;Allocation info for local variables in function 'Display'
                                     915 ;------------------------------------------------------------
-                                    916 ;num                       Allocated with name '_Display_num_65536_35'
+                                    916 ;num                       Allocated with name '_Display_num_65536_34'
                                     917 ;i                         Allocated to registers r3 
                                     918 ;------------------------------------------------------------
                                     919 ;	./src/main.c:153: void Display(void){
@@ -981,28 +981,28 @@
       0003BF 8E F0            [24]  981 	mov	b,r6
       0003C1 EF               [12]  982 	mov	a,r7
       0003C2 12 05 77         [24]  983 	lcall	__divulong
-      0003C5 85 82 14         [24]  984 	mov	_Display_num_65536_35,dpl
-      0003C8 85 83 15         [24]  985 	mov	(_Display_num_65536_35 + 1),dph
-      0003CB 85 F0 16         [24]  986 	mov	(_Display_num_65536_35 + 2),b
-      0003CE F5 17            [12]  987 	mov	(_Display_num_65536_35 + 3),a
+      0003C5 85 82 14         [24]  984 	mov	_Display_num_65536_34,dpl
+      0003C8 85 83 15         [24]  985 	mov	(_Display_num_65536_34 + 1),dph
+      0003CB 85 F0 16         [24]  986 	mov	(_Display_num_65536_34 + 2),b
+      0003CE F5 17            [12]  987 	mov	(_Display_num_65536_34 + 3),a
                                     988 ;	./src/main.c:160: for (i = 2;i<9;i++){
       0003D0 7B 02            [12]  989 	mov	r3,#0x02
       0003D2                        990 00110$:
                                     991 ;	./src/main.c:161: if (num) Sendbyte7219(i, num%10);
-      0003D2 E5 14            [12]  992 	mov	a,_Display_num_65536_35
-      0003D4 45 15            [12]  993 	orl	a,(_Display_num_65536_35 + 1)
-      0003D6 45 16            [12]  994 	orl	a,(_Display_num_65536_35 + 2)
-      0003D8 45 17            [12]  995 	orl	a,(_Display_num_65536_35 + 3)
+      0003D2 E5 14            [12]  992 	mov	a,_Display_num_65536_34
+      0003D4 45 15            [12]  993 	orl	a,(_Display_num_65536_34 + 1)
+      0003D6 45 16            [12]  994 	orl	a,(_Display_num_65536_34 + 2)
+      0003D8 45 17            [12]  995 	orl	a,(_Display_num_65536_34 + 3)
       0003DA 60 2B            [24]  996 	jz	00107$
       0003DC 75 18 0A         [24]  997 	mov	__modulong_PARM_2,#0x0a
       0003DF E4               [12]  998 	clr	a
       0003E0 F5 19            [12]  999 	mov	(__modulong_PARM_2 + 1),a
       0003E2 F5 1A            [12] 1000 	mov	(__modulong_PARM_2 + 2),a
       0003E4 F5 1B            [12] 1001 	mov	(__modulong_PARM_2 + 3),a
-      0003E6 85 14 82         [24] 1002 	mov	dpl,_Display_num_65536_35
-      0003E9 85 15 83         [24] 1003 	mov	dph,(_Display_num_65536_35 + 1)
-      0003EC 85 16 F0         [24] 1004 	mov	b,(_Display_num_65536_35 + 2)
-      0003EF E5 17            [12] 1005 	mov	a,(_Display_num_65536_35 + 3)
+      0003E6 85 14 82         [24] 1002 	mov	dpl,_Display_num_65536_34
+      0003E9 85 15 83         [24] 1003 	mov	dph,(_Display_num_65536_34 + 1)
+      0003EC 85 16 F0         [24] 1004 	mov	b,(_Display_num_65536_34 + 2)
+      0003EF E5 17            [12] 1005 	mov	a,(_Display_num_65536_34 + 3)
       0003F1 C0 03            [24] 1006 	push	ar3
       0003F3 12 04 F4         [24] 1007 	lcall	__modulong
       0003F6 A8 82            [24] 1008 	mov	r0,dpl
@@ -1027,16 +1027,16 @@
       000417 F5 19            [12] 1027 	mov	(__divulong_PARM_2 + 1),a
       000419 F5 1A            [12] 1028 	mov	(__divulong_PARM_2 + 2),a
       00041B F5 1B            [12] 1029 	mov	(__divulong_PARM_2 + 3),a
-      00041D 85 14 82         [24] 1030 	mov	dpl,_Display_num_65536_35
-      000420 85 15 83         [24] 1031 	mov	dph,(_Display_num_65536_35 + 1)
-      000423 85 16 F0         [24] 1032 	mov	b,(_Display_num_65536_35 + 2)
-      000426 E5 17            [12] 1033 	mov	a,(_Display_num_65536_35 + 3)
+      00041D 85 14 82         [24] 1030 	mov	dpl,_Display_num_65536_34
+      000420 85 15 83         [24] 1031 	mov	dph,(_Display_num_65536_34 + 1)
+      000423 85 16 F0         [24] 1032 	mov	b,(_Display_num_65536_34 + 2)
+      000426 E5 17            [12] 1033 	mov	a,(_Display_num_65536_34 + 3)
       000428 C0 03            [24] 1034 	push	ar3
       00042A 12 05 77         [24] 1035 	lcall	__divulong
-      00042D 85 82 14         [24] 1036 	mov	_Display_num_65536_35,dpl
-      000430 85 83 15         [24] 1037 	mov	(_Display_num_65536_35 + 1),dph
-      000433 85 F0 16         [24] 1038 	mov	(_Display_num_65536_35 + 2),b
-      000436 F5 17            [12] 1039 	mov	(_Display_num_65536_35 + 3),a
+      00042D 85 82 14         [24] 1036 	mov	_Display_num_65536_34,dpl
+      000430 85 83 15         [24] 1037 	mov	(_Display_num_65536_34 + 1),dph
+      000433 85 F0 16         [24] 1038 	mov	(_Display_num_65536_34 + 2),b
+      000436 F5 17            [12] 1039 	mov	(_Display_num_65536_34 + 3),a
       000438 D0 03            [24] 1040 	pop	ar3
                                    1041 ;	./src/main.c:160: for (i = 2;i<9;i++){
       00043A 0B               [12] 1042 	inc	r3

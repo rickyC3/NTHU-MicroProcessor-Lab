@@ -205,7 +205,7 @@ Symbol Table
     _DPH                                                        =  000083 G
     _DPL                                                        =  000082 G
  18 _Display                                                       0002DF GR
-  5 _Display_num_65536_35                                          00000C R
+  5 _Display_num_65536_34                                          00000C R
     _EA                                                         =  0000AF G
     _ES                                                         =  0000AC G
     _ET0                                                        =  0000A9 G
