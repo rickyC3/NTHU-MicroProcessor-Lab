@@ -246,7 +246,7 @@ _num2::
 	.ds 4
 _opr::
 	.ds 1
-_Display_num_65536_35:
+_Display_num_65536_34:
 	.ds 4
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
@@ -913,7 +913,7 @@ _Sendbyte7219:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Display'
 ;------------------------------------------------------------
-;num                       Allocated with name '_Display_num_65536_35'
+;num                       Allocated with name '_Display_num_65536_34'
 ;i                         Allocated to registers r3 
 ;------------------------------------------------------------
 ;	./src/main.c:153: void Display(void){
@@ -981,28 +981,28 @@ _Display:
 	mov	b,r6
 	mov	a,r7
 	lcall	__divulong
-	mov	_Display_num_65536_35,dpl
-	mov	(_Display_num_65536_35 + 1),dph
-	mov	(_Display_num_65536_35 + 2),b
-	mov	(_Display_num_65536_35 + 3),a
+	mov	_Display_num_65536_34,dpl
+	mov	(_Display_num_65536_34 + 1),dph
+	mov	(_Display_num_65536_34 + 2),b
+	mov	(_Display_num_65536_34 + 3),a
 ;	./src/main.c:160: for (i = 2;i<9;i++){
 	mov	r3,#0x02
 00110$:
 ;	./src/main.c:161: if (num) Sendbyte7219(i, num%10);
-	mov	a,_Display_num_65536_35
-	orl	a,(_Display_num_65536_35 + 1)
-	orl	a,(_Display_num_65536_35 + 2)
-	orl	a,(_Display_num_65536_35 + 3)
+	mov	a,_Display_num_65536_34
+	orl	a,(_Display_num_65536_34 + 1)
+	orl	a,(_Display_num_65536_34 + 2)
+	orl	a,(_Display_num_65536_34 + 3)
 	jz	00107$
 	mov	__modulong_PARM_2,#0x0a
 	clr	a
 	mov	(__modulong_PARM_2 + 1),a
 	mov	(__modulong_PARM_2 + 2),a
 	mov	(__modulong_PARM_2 + 3),a
-	mov	dpl,_Display_num_65536_35
-	mov	dph,(_Display_num_65536_35 + 1)
-	mov	b,(_Display_num_65536_35 + 2)
-	mov	a,(_Display_num_65536_35 + 3)
+	mov	dpl,_Display_num_65536_34
+	mov	dph,(_Display_num_65536_34 + 1)
+	mov	b,(_Display_num_65536_34 + 2)
+	mov	a,(_Display_num_65536_34 + 3)
 	push	ar3
 	lcall	__modulong
 	mov	r0,dpl
@@ -1027,16 +1027,16 @@ _Display:
 	mov	(__divulong_PARM_2 + 1),a
 	mov	(__divulong_PARM_2 + 2),a
 	mov	(__divulong_PARM_2 + 3),a
-	mov	dpl,_Display_num_65536_35
-	mov	dph,(_Display_num_65536_35 + 1)
-	mov	b,(_Display_num_65536_35 + 2)
-	mov	a,(_Display_num_65536_35 + 3)
+	mov	dpl,_Display_num_65536_34
+	mov	dph,(_Display_num_65536_34 + 1)
+	mov	b,(_Display_num_65536_34 + 2)
+	mov	a,(_Display_num_65536_34 + 3)
 	push	ar3
 	lcall	__divulong
-	mov	_Display_num_65536_35,dpl
-	mov	(_Display_num_65536_35 + 1),dph
-	mov	(_Display_num_65536_35 + 2),b
-	mov	(_Display_num_65536_35 + 3),a
+	mov	_Display_num_65536_34,dpl
+	mov	(_Display_num_65536_34 + 1),dph
+	mov	(_Display_num_65536_34 + 2),b
+	mov	(_Display_num_65536_34 + 3),a
 	pop	ar3
 ;	./src/main.c:160: for (i = 2;i<9;i++){
 	inc	r3

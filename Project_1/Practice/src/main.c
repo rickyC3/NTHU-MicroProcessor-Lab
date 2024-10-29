@@ -20,7 +20,7 @@ unsigned long num_opr(void);
 void Display(void);
 
 void Sendbyte7219(unsigned char address, unsigned char dat);
-void Write7219 (unsigned char address, unsigned char dat);
+//void Write7219 (unsigned char address, unsigned char dat);
 
 void main(void){
     // init 7seg
