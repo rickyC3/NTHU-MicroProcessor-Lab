@@ -1,0 +1,254 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	main.asm
+	Object File:	main.hex
+	List File:	main.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0030	ORG 0030H				; origin start at memory address 0
+    2:	  0030			START:
+    3:	  0030			LOOP:
+    4:	  0030	7C 19			MOV R4,#25			; R4 = 25
+    5:
+    6:				; Make the buzzer play the note Do
+    7:	  0032			DOAGAIN:
+    8:	  0032	7D 19			MOV R5,#25			; R5 = 25
+    9:	  0034			DO:
+   10:	  0034	D2 B7			SETB P3.7			; P3.7 = 1
+   11:	  0036	11 62			ACALL DELAY_DO
+   12:	  0038	C2 B7			CLR P3.7			; P3.7 = 0
+   13:	  003A	11 62			ACALL DELAY_DO
+   14:	  003C	DD F6			DJNZ R5,DO			; if (R5-1) != 0, jump to DO
+   15:	  003E	DC F2			DJNZ R4,DOAGAIN		; if (R4-1) != 0, jump to DOAGAIN
+   16:
+   17:	  0040	7C 19			MOV R4,#25			; R4 = 25
+   18:
+   19:				; Make the buzzer play the note Re
+   20:	  0042			REAGAIN:
+   21:	  0042	7D 19			MOV R5,#25			; R5 = 25
+   22:	  0044			RE:
+   23:	  0044	D2 B7			SETB P3.7			; P3.7 = 1
+   24:	  0046	11 6F			ACALL DELAY_RE
+   25:	  0048	C2 B7			CLR P3.7			; P3.7 = 0
+   26:	  004A	11 6F			ACALL DELAY_RE
+   27:	  004C	DD F6			DJNZ R5,RE			; if (R5-1) != 0, jump to RE
+   28:	  004E	DC F2			DJNZ R4,REAGAIN		; if (R4-1) != 0, jump to REAGAIN
+   29:
+   30:	  0050	7C 19			MOV R4,#25			; R4 = 25
+   31:
+   32:				; Make the buzzer play the note Mi
+   33:	  0052			MIAGAIN:
+   34:	  0052	7D 19			MOV R5,#25			; R5 = 25
+   35:	  0054			MI:
+   36:	  0054	D2 B7			SETB P3.7			; P3.7 = 1
+   37:	  0056	11 7C			ACALL DELAY_MI
+   38:	  0058	C2 B7			CLR P3.7			; P3.7 = 0
+   39:	  005A	11 7C			ACALL DELAY_MI
+   40:	  005C	DD F6			DJNZ R5,MI			; if (R5-1) != 0, jump to MI
+   41:	  005E	DC F2			DJNZ R4,MIAGAIN		; if (R4-1) != 0, jump to MIAGAIN
+   42:	  0060	80 27			SJMP END1
+   43:
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+ Line  I  Addr  Code            Source
+
+   44:				; DO = 1047Hz
+   45:				; we require a delay of 0.4776ms for each half period
+   46:				; 440 cycles @Fosc = 11.0592MHz
+   47:	  0062			DELAY_Do:
+   48:	  0062	7E 0A		    MOV R6,#10				; 1 cycle
+   49:
+   50:	  0064			DELAY_Do_DL1:
+   51:	  0064	7F 13			MOV R7,#19				; 1 cycle
+   52:	  0066	DF FE			DJNZ R7,$				; 2 cycles
+   53:	  0068	DE FA			DJNZ R6,DELAY_Do_DL1	; 2 cycles
+   54:					; 410 cycle = R6 * (1 + (R7 * 2) + 2) = 10 * (1 + (19 * 2) + 2)
+   55:
+   56:	  006A	7F 0D			MOV R7,#13				; 1 cycle
+   57:	  006C	DF FE			DJNZ R7,$				; 2 cycles
+   58:					; 27 cycle = 1 + (R7 * 2) = 1 + (13 * 2)
+   59:
+   60:	  006E	22			RET						; 2 cycles
+   61:					; Total = 440 cycles, meeting the required cycle count for generating DO
+   62:
+   63:				; RE = 1175Hz
+   64:				; we require a delay of 0.4255ms for each half period
+   65:				; 392 cycles @Fosc = 11.0592MHz
+   66:	  006F			DELAY_RE:
+   67:	  006F	7E 0A			MOV R6,#10				; 1 cycle
+   68:
+   69:	  0071			DELAY_RE_DL1:
+   70:	  0071	7F 11			MOV R7,#17				; 1 cycle
+   71:	  0073	DF FE			DJNZ R7,$				; 2 cycles
+   72:	  0075	DE FA			DJNZ R6,DELAY_RE_DL1	; 2 cycles
+   73:					; 370 cycles = R6 * (1 + (R7 * 2) + 2) = 10 * (1 + (17 * 2) + 2)
+   74:
+   75:	  0077	7F 09			MOV R7,#9				; 1 cycle
+   76:	  0079	DF FE			DJNZ R7,$				; 2 cycles
+   77:					; 19 cycles = 1 + (R7 * 2) = 1 + (9 * 2)
+   78:
+   79:	  007B	22			RET						; 2 cycles
+   80:					; Total = 392 cycles, meeting the required cycle count for generating RE
+   81:
+   82:				; MI = 1319Hz
+   83:				; we require a delay of 0.3790ms for each half period
+   84:				; 349 cycles @Fosc = 11.0592MHz
+   85:	  007C			DELAY_MI:
+   86:	  007C	7E 0A			MOV R6,#10				; 1 cycle
+   87:
+   88:	  007E			DELAY_MI_DL1:
+   89:	  007E	7F 0F			MOV R7,#15				; 1 cycle
+   90:	  0080	DF FE			DJNZ R7,$				; 2 cycles
+   91:	  0082	DE FA			DJNZ R6,DELAY_MI_DL1	; 2 cycles
+   92:					; 330 cycles = R6 * (1 + (R7 * 2) + 2) = 10 * (1 + (15 * 2) + 2)
+   93:
+   94:	  0084	7F 07			MOV R7,#7				; 1 cycle
+   95:	  0086	DF FE			DJNZ R7,$				; 2 cycles
+   96:					; 15 cycles = 1 + (R7 * 2) = 1 + (7 * 2)
+   97:
+   98:	  0088	22			RET						; 2 cycles
+   99:					; Total = 349 cycles, meeting the required cycle count for generating MI
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+ Line  I  Addr  Code            Source
+
+  100:
+  101:	  0089			END1:
+  102:	  0089	80 FE		     SJMP END1
+  103:				END
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+CY				  BIT	      D7
+DELAY_DO			  CODE	    0062	  47
+DELAY_DO_DL1			  CODE	    0064	  50
+DELAY_MI			  CODE	    007C	  85
+DELAY_MI_DL1			  CODE	    007E	  88
+DELAY_RE			  CODE	    006F	  66
+DELAY_RE_DL1			  CODE	    0071	  69
+DO				  CODE	    0034	   9
+DOAGAIN				  CODE	    0032	   7
+DPH				  DATA	      83
+DPL				  DATA	      82
+EA				  BIT	      AF
+END1				  CODE	    0089	 101
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+IT1				  BIT	      8A
+LOOP				  CODE	    0030	   3
+MI				  CODE	    0054	  35
+MIAGAIN				  CODE	    0052	  33
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 5
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+RB8				  BIT	      9A
+RD				  BIT	      B7
+RE				  CODE	    0044	  22
+REAGAIN				  CODE	    0042	  20
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCON				  DATA	      98
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+START				  CODE	    0030	   2
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+WR				  BIT	      B6
