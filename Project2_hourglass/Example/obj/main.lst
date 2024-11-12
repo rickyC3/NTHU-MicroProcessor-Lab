@@ -1,0 +1,1031 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler 
+                                      3 ; Version 4.3.2 #14374 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module main
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _Sendbyte7219_PARM_4
+                                     12 	.globl _Sendbyte7219_PARM_3
+                                     13 	.globl _Sendbyte7219_PARM_2
+                                     14 	.globl _main
+                                     15 	.globl _T0_isr
+                                     16 	.globl _Shift
+                                     17 	.globl _Call
+                                     18 	.globl _Sendbyte7219
+                                     19 	.globl _Single_ReadI2C
+                                     20 	.globl _Single_WriteI2C
+                                     21 	.globl _CY
+                                     22 	.globl _AC
+                                     23 	.globl _F0
+                                     24 	.globl _RS1
+                                     25 	.globl _RS0
+                                     26 	.globl _OV
+                                     27 	.globl _F1
+                                     28 	.globl _P
+                                     29 	.globl _PS
+                                     30 	.globl _PT1
+                                     31 	.globl _PX1
+                                     32 	.globl _PT0
+                                     33 	.globl _PX0
+                                     34 	.globl _RD
+                                     35 	.globl _WR
+                                     36 	.globl _T1
+                                     37 	.globl _T0
+                                     38 	.globl _INT1
+                                     39 	.globl _INT0
+                                     40 	.globl _TXD
+                                     41 	.globl _RXD
+                                     42 	.globl _P3_7
+                                     43 	.globl _P3_6
+                                     44 	.globl _P3_5
+                                     45 	.globl _P3_4
+                                     46 	.globl _P3_3
+                                     47 	.globl _P3_2
+                                     48 	.globl _P3_1
+                                     49 	.globl _P3_0
+                                     50 	.globl _EA
+                                     51 	.globl _ES
+                                     52 	.globl _ET1
+                                     53 	.globl _EX1
+                                     54 	.globl _ET0
+                                     55 	.globl _EX0
+                                     56 	.globl _P2_7
+                                     57 	.globl _P2_6
+                                     58 	.globl _P2_5
+                                     59 	.globl _P2_4
+                                     60 	.globl _P2_3
+                                     61 	.globl _P2_2
+                                     62 	.globl _P2_1
+                                     63 	.globl _P2_0
+                                     64 	.globl _SM0
+                                     65 	.globl _SM1
+                                     66 	.globl _SM2
+                                     67 	.globl _REN
+                                     68 	.globl _TB8
+                                     69 	.globl _RB8
+                                     70 	.globl _TI
+                                     71 	.globl _RI
+                                     72 	.globl _P1_7
+                                     73 	.globl _P1_6
+                                     74 	.globl _P1_5
+                                     75 	.globl _P1_4
+                                     76 	.globl _P1_3
+                                     77 	.globl _P1_2
+                                     78 	.globl _P1_1
+                                     79 	.globl _P1_0
+                                     80 	.globl _TF1
+                                     81 	.globl _TR1
+                                     82 	.globl _TF0
+                                     83 	.globl _TR0
+                                     84 	.globl _IE1
+                                     85 	.globl _IT1
+                                     86 	.globl _IE0
+                                     87 	.globl _IT0
+                                     88 	.globl _P0_7
+                                     89 	.globl _P0_6
+                                     90 	.globl _P0_5
+                                     91 	.globl _P0_4
+                                     92 	.globl _P0_3
+                                     93 	.globl _P0_2
+                                     94 	.globl _P0_1
+                                     95 	.globl _P0_0
+                                     96 	.globl _B
+                                     97 	.globl _ACC
+                                     98 	.globl _PSW
+                                     99 	.globl _IP
+                                    100 	.globl _P3
+                                    101 	.globl _IE
+                                    102 	.globl _P2
+                                    103 	.globl _SBUF
+                                    104 	.globl _SCON
+                                    105 	.globl _P1
+                                    106 	.globl _TH1
+                                    107 	.globl _TH0
+                                    108 	.globl _TL1
+                                    109 	.globl _TL0
+                                    110 	.globl _TMOD
+                                    111 	.globl _TCON
+                                    112 	.globl _PCON
+                                    113 	.globl _DPH
+                                    114 	.globl _DPL
+                                    115 	.globl _SP
+                                    116 	.globl _P0
+                                    117 	.globl _ud
+                                    118 	.globl _cnt
+                                    119 	.globl _accel
+                                    120 	.globl _m
+                                    121 	.globl _m_1
+                                    122 ;--------------------------------------------------------
+                                    123 ; special function registers
+                                    124 ;--------------------------------------------------------
+                                    125 	.area RSEG    (ABS,DATA)
+      000000                        126 	.org 0x0000
+                           000080   127 _P0	=	0x0080
+                           000081   128 _SP	=	0x0081
+                           000082   129 _DPL	=	0x0082
+                           000083   130 _DPH	=	0x0083
+                           000087   131 _PCON	=	0x0087
+                           000088   132 _TCON	=	0x0088
+                           000089   133 _TMOD	=	0x0089
+                           00008A   134 _TL0	=	0x008a
+                           00008B   135 _TL1	=	0x008b
+                           00008C   136 _TH0	=	0x008c
+                           00008D   137 _TH1	=	0x008d
+                           000090   138 _P1	=	0x0090
+                           000098   139 _SCON	=	0x0098
+                           000099   140 _SBUF	=	0x0099
+                           0000A0   141 _P2	=	0x00a0
+                           0000A8   142 _IE	=	0x00a8
+                           0000B0   143 _P3	=	0x00b0
+                           0000B8   144 _IP	=	0x00b8
+                           0000D0   145 _PSW	=	0x00d0
+                           0000E0   146 _ACC	=	0x00e0
+                           0000F0   147 _B	=	0x00f0
+                                    148 ;--------------------------------------------------------
+                                    149 ; special function bits
+                                    150 ;--------------------------------------------------------
+                                    151 	.area RSEG    (ABS,DATA)
+      000000                        152 	.org 0x0000
+                           000080   153 _P0_0	=	0x0080
+                           000081   154 _P0_1	=	0x0081
+                           000082   155 _P0_2	=	0x0082
+                           000083   156 _P0_3	=	0x0083
+                           000084   157 _P0_4	=	0x0084
+                           000085   158 _P0_5	=	0x0085
+                           000086   159 _P0_6	=	0x0086
+                           000087   160 _P0_7	=	0x0087
+                           000088   161 _IT0	=	0x0088
+                           000089   162 _IE0	=	0x0089
+                           00008A   163 _IT1	=	0x008a
+                           00008B   164 _IE1	=	0x008b
+                           00008C   165 _TR0	=	0x008c
+                           00008D   166 _TF0	=	0x008d
+                           00008E   167 _TR1	=	0x008e
+                           00008F   168 _TF1	=	0x008f
+                           000090   169 _P1_0	=	0x0090
+                           000091   170 _P1_1	=	0x0091
+                           000092   171 _P1_2	=	0x0092
+                           000093   172 _P1_3	=	0x0093
+                           000094   173 _P1_4	=	0x0094
+                           000095   174 _P1_5	=	0x0095
+                           000096   175 _P1_6	=	0x0096
+                           000097   176 _P1_7	=	0x0097
+                           000098   177 _RI	=	0x0098
+                           000099   178 _TI	=	0x0099
+                           00009A   179 _RB8	=	0x009a
+                           00009B   180 _TB8	=	0x009b
+                           00009C   181 _REN	=	0x009c
+                           00009D   182 _SM2	=	0x009d
+                           00009E   183 _SM1	=	0x009e
+                           00009F   184 _SM0	=	0x009f
+                           0000A0   185 _P2_0	=	0x00a0
+                           0000A1   186 _P2_1	=	0x00a1
+                           0000A2   187 _P2_2	=	0x00a2
+                           0000A3   188 _P2_3	=	0x00a3
+                           0000A4   189 _P2_4	=	0x00a4
+                           0000A5   190 _P2_5	=	0x00a5
+                           0000A6   191 _P2_6	=	0x00a6
+                           0000A7   192 _P2_7	=	0x00a7
+                           0000A8   193 _EX0	=	0x00a8
+                           0000A9   194 _ET0	=	0x00a9
+                           0000AA   195 _EX1	=	0x00aa
+                           0000AB   196 _ET1	=	0x00ab
+                           0000AC   197 _ES	=	0x00ac
+                           0000AF   198 _EA	=	0x00af
+                           0000B0   199 _P3_0	=	0x00b0
+                           0000B1   200 _P3_1	=	0x00b1
+                           0000B2   201 _P3_2	=	0x00b2
+                           0000B3   202 _P3_3	=	0x00b3
+                           0000B4   203 _P3_4	=	0x00b4
+                           0000B5   204 _P3_5	=	0x00b5
+                           0000B6   205 _P3_6	=	0x00b6
+                           0000B7   206 _P3_7	=	0x00b7
+                           0000B0   207 _RXD	=	0x00b0
+                           0000B1   208 _TXD	=	0x00b1
+                           0000B2   209 _INT0	=	0x00b2
+                           0000B3   210 _INT1	=	0x00b3
+                           0000B4   211 _T0	=	0x00b4
+                           0000B5   212 _T1	=	0x00b5
+                           0000B6   213 _WR	=	0x00b6
+                           0000B7   214 _RD	=	0x00b7
+                           0000B8   215 _PX0	=	0x00b8
+                           0000B9   216 _PT0	=	0x00b9
+                           0000BA   217 _PX1	=	0x00ba
+                           0000BB   218 _PT1	=	0x00bb
+                           0000BC   219 _PS	=	0x00bc
+                           0000D0   220 _P	=	0x00d0
+                           0000D1   221 _F1	=	0x00d1
+                           0000D2   222 _OV	=	0x00d2
+                           0000D3   223 _RS0	=	0x00d3
+                           0000D4   224 _RS1	=	0x00d4
+                           0000D5   225 _F0	=	0x00d5
+                           0000D6   226 _AC	=	0x00d6
+                           0000D7   227 _CY	=	0x00d7
+                                    228 ;--------------------------------------------------------
+                                    229 ; overlayable register banks
+                                    230 ;--------------------------------------------------------
+                                    231 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        232 	.ds 8
+                                    233 ;--------------------------------------------------------
+                                    234 ; overlayable bit register bank
+                                    235 ;--------------------------------------------------------
+                                    236 	.area BIT_BANK	(REL,OVR,DATA)
+      000000                        237 bits:
+      000000                        238 	.ds 1
+                           008000   239 	b0 = bits[0]
+                           008100   240 	b1 = bits[1]
+                           008200   241 	b2 = bits[2]
+                           008300   242 	b3 = bits[3]
+                           008400   243 	b4 = bits[4]
+                           008500   244 	b5 = bits[5]
+                           008600   245 	b6 = bits[6]
+                           008700   246 	b7 = bits[7]
+                                    247 ;--------------------------------------------------------
+                                    248 ; internal ram data
+                                    249 ;--------------------------------------------------------
+                                    250 	.area DSEG    (DATA)
+      000000                        251 _m_1::
+      000000                        252 	.ds 20
+      000014                        253 _m::
+      000014                        254 	.ds 20
+      000028                        255 _accel::
+      000028                        256 	.ds 2
+      00002A                        257 _cnt::
+      00002A                        258 	.ds 2
+      00002C                        259 _ud::
+      00002C                        260 	.ds 2
+                                    261 ;--------------------------------------------------------
+                                    262 ; overlayable items in internal ram
+                                    263 ;--------------------------------------------------------
+                                    264 	.area	OSEG    (OVR,DATA)
+      000000                        265 _Sendbyte7219_PARM_2:
+      000000                        266 	.ds 1
+      000001                        267 _Sendbyte7219_PARM_3:
+      000001                        268 	.ds 1
+      000002                        269 _Sendbyte7219_PARM_4:
+      000002                        270 	.ds 1
+                                    271 	.area	OSEG    (OVR,DATA)
+                                    272 ;--------------------------------------------------------
+                                    273 ; Stack segment in internal ram
+                                    274 ;--------------------------------------------------------
+                                    275 	.area SSEG
+      000000                        276 __start__stack:
+      000000                        277 	.ds	1
+                                    278 
+                                    279 ;--------------------------------------------------------
+                                    280 ; indirectly addressable internal ram data
+                                    281 ;--------------------------------------------------------
+                                    282 	.area ISEG    (DATA)
+                                    283 ;--------------------------------------------------------
+                                    284 ; absolute internal ram data
+                                    285 ;--------------------------------------------------------
+                                    286 	.area IABS    (ABS,DATA)
+                                    287 	.area IABS    (ABS,DATA)
+                                    288 ;--------------------------------------------------------
+                                    289 ; bit data
+                                    290 ;--------------------------------------------------------
+                                    291 	.area BSEG    (BIT)
+                                    292 ;--------------------------------------------------------
+                                    293 ; paged external ram data
+                                    294 ;--------------------------------------------------------
+                                    295 	.area PSEG    (PAG,XDATA)
+                                    296 ;--------------------------------------------------------
+                                    297 ; uninitialized external ram data
+                                    298 ;--------------------------------------------------------
+                                    299 	.area XSEG    (XDATA)
+                                    300 ;--------------------------------------------------------
+                                    301 ; absolute external ram data
+                                    302 ;--------------------------------------------------------
+                                    303 	.area XABS    (ABS,XDATA)
+                                    304 ;--------------------------------------------------------
+                                    305 ; initialized external ram data
+                                    306 ;--------------------------------------------------------
+                                    307 	.area XISEG   (XDATA)
+                                    308 	.area HOME    (CODE)
+                                    309 	.area GSINIT0 (CODE)
+                                    310 	.area GSINIT1 (CODE)
+                                    311 	.area GSINIT2 (CODE)
+                                    312 	.area GSINIT3 (CODE)
+                                    313 	.area GSINIT4 (CODE)
+                                    314 	.area GSINIT5 (CODE)
+                                    315 	.area GSINIT  (CODE)
+                                    316 	.area GSFINAL (CODE)
+                                    317 	.area CSEG    (CODE)
+                                    318 ;--------------------------------------------------------
+                                    319 ; interrupt vector
+                                    320 ;--------------------------------------------------------
+                                    321 	.area HOME    (CODE)
+      000000                        322 __interrupt_vect:
+      000000 02r00r00         [24]  323 	ljmp	__sdcc_gsinit_startup
+      000003 32               [24]  324 	reti
+      000004                        325 	.ds	7
+      00000B 02r00rF2         [24]  326 	ljmp	_T0_isr
+                                    327 ;--------------------------------------------------------
+                                    328 ; global & static initialisations
+                                    329 ;--------------------------------------------------------
+                                    330 	.area HOME    (CODE)
+                                    331 	.area GSINIT  (CODE)
+                                    332 	.area GSFINAL (CODE)
+                                    333 	.area GSINIT  (CODE)
+                                    334 	.globl __sdcc_gsinit_startup
+                                    335 	.globl __sdcc_program_startup
+                                    336 	.globl __start__stack
+                                    337 	.globl __mcs51_genXINIT
+                                    338 	.globl __mcs51_genXRAMCLEAR
+                                    339 	.globl __mcs51_genRAMCLEAR
+                                    340 ;	./src/main.c:29: unsigned char m_1[20], m[20] = {0,255,255,255,255,255,255,255,255};
+      000000 75*14 00         [24]  341 	mov	_m,#0x00
+      000003 75*15 FF         [24]  342 	mov	(_m + 0x0001),#0xff
+      000006 75*16 FF         [24]  343 	mov	(_m + 0x0002),#0xff
+      000009 75*17 FF         [24]  344 	mov	(_m + 0x0003),#0xff
+      00000C 75*18 FF         [24]  345 	mov	(_m + 0x0004),#0xff
+      00000F 75*19 FF         [24]  346 	mov	(_m + 0x0005),#0xff
+      000012 75*1A FF         [24]  347 	mov	(_m + 0x0006),#0xff
+      000015 75*1B FF         [24]  348 	mov	(_m + 0x0007),#0xff
+      000018 75*1C FF         [24]  349 	mov	(_m + 0x0008),#0xff
+                                    350 ;	./src/main.c:30: int accel, cnt = 0, ud;
+      00001B E4               [12]  351 	clr	a
+      00001C F5*2A            [12]  352 	mov	_cnt,a
+      00001E F5*2B            [12]  353 	mov	(_cnt + 1),a
+                                    354 	.area GSFINAL (CODE)
+      000000 02r00r0E         [24]  355 	ljmp	__sdcc_program_startup
+                                    356 ;--------------------------------------------------------
+                                    357 ; Home
+                                    358 ;--------------------------------------------------------
+                                    359 	.area HOME    (CODE)
+                                    360 	.area HOME    (CODE)
+      00000E                        361 __sdcc_program_startup:
+      00000E 02r03r54         [24]  362 	ljmp	_main
+                                    363 ;	return from main will return to caller
+                                    364 ;--------------------------------------------------------
+                                    365 ; code
+                                    366 ;--------------------------------------------------------
+                                    367 	.area CSEG    (CODE)
+                                    368 ;------------------------------------------------------------
+                                    369 ;Allocation info for local variables in function 'Sendbyte7219'
+                                    370 ;------------------------------------------------------------
+                                    371 ;dat_1                     Allocated with name '_Sendbyte7219_PARM_2'
+                                    372 ;add_2                     Allocated with name '_Sendbyte7219_PARM_3'
+                                    373 ;dat_2                     Allocated with name '_Sendbyte7219_PARM_4'
+                                    374 ;add_1                     Allocated to registers r7 
+                                    375 ;i                         Allocated to registers r5 
+                                    376 ;j                         Allocated to registers r6 
+                                    377 ;------------------------------------------------------------
+                                    378 ;	./src/main.c:37: void Sendbyte7219(char add_1, char dat_1, char add_2, char dat_2) {
+                                    379 ;	-----------------------------------------
+                                    380 ;	 function Sendbyte7219
+                                    381 ;	-----------------------------------------
+      000000                        382 _Sendbyte7219:
+                           000007   383 	ar7 = 0x07
+                           000006   384 	ar6 = 0x06
+                           000005   385 	ar5 = 0x05
+                           000004   386 	ar4 = 0x04
+                           000003   387 	ar3 = 0x03
+                           000002   388 	ar2 = 0x02
+                           000001   389 	ar1 = 0x01
+                           000000   390 	ar0 = 0x00
+      000000 AF 82            [24]  391 	mov	r7,dpl
+                                    392 ;	./src/main.c:40: LOAD = 0;
+                                    393 ;	assignBit
+      000002 C2 A1            [12]  394 	clr	_P2_1
+                                    395 ;	./src/main.c:41: for (j = 0; j < 4; j++) {
+      000004 7E 00            [12]  396 	mov	r6,#0x00
+      000006                        397 00105$:
+                                    398 ;	./src/main.c:42: for (i = 128; i > 0; i >>= 1) {
+      000006 7D 80            [12]  399 	mov	r5,#0x80
+      000008                        400 00103$:
+                                    401 ;	./src/main.c:43: CLK = 0;
+                                    402 ;	assignBit
+      000008 C2 A0            [12]  403 	clr	_P2_0
+                                    404 ;	./src/main.c:44: DIN = (add_2 & i);
+      00000A ED               [12]  405 	mov	a,r5
+      00000B 55*01            [12]  406 	anl	a,_Sendbyte7219_PARM_3
+                                    407 ;	assignBit
+      00000D 24 FF            [12]  408 	add	a,#0xff
+      00000F 92 A2            [24]  409 	mov	_P2_2,c
+                                    410 ;	./src/main.c:45: CLK = 1;
+                                    411 ;	assignBit
+      000011 D2 A0            [12]  412 	setb	_P2_0
+                                    413 ;	./src/main.c:42: for (i = 128; i > 0; i >>= 1) {
+      000013 ED               [12]  414 	mov	a,r5
+      000014 C3               [12]  415 	clr	c
+      000015 13               [12]  416 	rrc	a
+      000016 FD               [12]  417 	mov	r5,a
+      000017 70 EF            [24]  418 	jnz	00103$
+                                    419 ;	./src/main.c:47: add_2 = dat_2;
+      000019 85*02*01         [24]  420 	mov	_Sendbyte7219_PARM_3,_Sendbyte7219_PARM_4
+                                    421 ;	./src/main.c:48: dat_2 = add_1;
+      00001C 8F*02            [24]  422 	mov	_Sendbyte7219_PARM_4,r7
+                                    423 ;	./src/main.c:49: add_1 = dat_1;
+      00001E AF*00            [24]  424 	mov	r7,_Sendbyte7219_PARM_2
+                                    425 ;	./src/main.c:41: for (j = 0; j < 4; j++) {
+      000020 0E               [12]  426 	inc	r6
+      000021 BE 04 00         [24]  427 	cjne	r6,#0x04,00137$
+      000024                        428 00137$:
+      000024 40 E0            [24]  429 	jc	00105$
+                                    430 ;	./src/main.c:52: LOAD = 1;
+                                    431 ;	assignBit
+      000026 D2 A1            [12]  432 	setb	_P2_1
+                                    433 ;	./src/main.c:53: }
+      000028 22               [24]  434 	ret
+                                    435 ;------------------------------------------------------------
+                                    436 ;Allocation info for local variables in function 'Call'
+                                    437 ;------------------------------------------------------------
+                                    438 ;j                         Allocated to registers r6 r7 
+                                    439 ;k                         Allocated to registers r4 r5 
+                                    440 ;------------------------------------------------------------
+                                    441 ;	./src/main.c:55: void Call(void) {
+                                    442 ;	-----------------------------------------
+                                    443 ;	 function Call
+                                    444 ;	-----------------------------------------
+      000029                        445 _Call:
+                                    446 ;	./src/main.c:58: for (j = 0; j < 100; j++) { 
+      000029 7E 00            [12]  447 	mov	r6,#0x00
+      00002B 7F 00            [12]  448 	mov	r7,#0x00
+      00002D                        449 00110$:
+                                    450 ;	./src/main.c:59: P3_7 = 0; 
+                                    451 ;	assignBit
+      00002D C2 B7            [12]  452 	clr	_P3_7
+                                    453 ;	./src/main.c:60: for (k = 0; k < 100; k++);
+      00002F 7C 64            [12]  454 	mov	r4,#0x64
+      000031 7D 00            [12]  455 	mov	r5,#0x00
+      000033                        456 00106$:
+      000033 1C               [12]  457 	dec	r4
+      000034 BC FF 01         [24]  458 	cjne	r4,#0xff,00147$
+      000037 1D               [12]  459 	dec	r5
+      000038                        460 00147$:
+      000038 EC               [12]  461 	mov	a,r4
+      000039 4D               [12]  462 	orl	a,r5
+      00003A 70 F7            [24]  463 	jnz	00106$
+                                    464 ;	./src/main.c:61: P3_7 = 1; 
+                                    465 ;	assignBit
+      00003C D2 B7            [12]  466 	setb	_P3_7
+                                    467 ;	./src/main.c:62: for (k = 0; k < 100; k++);
+      00003E 7C 64            [12]  468 	mov	r4,#0x64
+      000040 7D 00            [12]  469 	mov	r5,#0x00
+      000042                        470 00109$:
+      000042 1C               [12]  471 	dec	r4
+      000043 BC FF 01         [24]  472 	cjne	r4,#0xff,00149$
+      000046 1D               [12]  473 	dec	r5
+      000047                        474 00149$:
+      000047 EC               [12]  475 	mov	a,r4
+      000048 4D               [12]  476 	orl	a,r5
+      000049 70 F7            [24]  477 	jnz	00109$
+                                    478 ;	./src/main.c:58: for (j = 0; j < 100; j++) { 
+      00004B 0E               [12]  479 	inc	r6
+      00004C BE 00 01         [24]  480 	cjne	r6,#0x00,00151$
+      00004F 0F               [12]  481 	inc	r7
+      000050                        482 00151$:
+      000050 C3               [12]  483 	clr	c
+      000051 EE               [12]  484 	mov	a,r6
+      000052 94 64            [12]  485 	subb	a,#0x64
+      000054 EF               [12]  486 	mov	a,r7
+      000055 64 80            [12]  487 	xrl	a,#0x80
+      000057 94 80            [12]  488 	subb	a,#0x80
+      000059 40 D2            [24]  489 	jc	00110$
+                                    490 ;	./src/main.c:64: }
+      00005B 22               [24]  491 	ret
+                                    492 ;------------------------------------------------------------
+                                    493 ;Allocation info for local variables in function 'Shift'
+                                    494 ;------------------------------------------------------------
+                                    495 ;i                         Allocated to registers r6 
+                                    496 ;------------------------------------------------------------
+                                    497 ;	./src/main.c:66: void Shift(void) {
+                                    498 ;	-----------------------------------------
+                                    499 ;	 function Shift
+                                    500 ;	-----------------------------------------
+      00005C                        501 _Shift:
+                                    502 ;	./src/main.c:69: for (i = (17 * ud + 19) >> 1; ud != 0 && i != (-19 * ud + 19)>>1; i -= ud) {
+      00005C 85*2C*00         [24]  503 	mov	__mulint_PARM_2,_ud
+      00005F 85*2D*01         [24]  504 	mov	(__mulint_PARM_2 + 1),(_ud + 1)
+      000062 90 00 11         [24]  505 	mov	dptr,#0x0011
+      000065 12r00r00         [24]  506 	lcall	__mulint
+      000068 E5 82            [12]  507 	mov	a,dpl
+      00006A 85 83 F0         [24]  508 	mov	b,dph
+      00006D 24 13            [12]  509 	add	a,#0x13
+      00006F FE               [12]  510 	mov	r6,a
+      000070 E4               [12]  511 	clr	a
+      000071 35 F0            [12]  512 	addc	a,b
+      000073 A2 E7            [12]  513 	mov	c,acc.7
+      000075 13               [12]  514 	rrc	a
+      000076 CE               [12]  515 	xch	a,r6
+      000077 13               [12]  516 	rrc	a
+      000078 CE               [12]  517 	xch	a,r6
+      000079 FF               [12]  518 	mov	r7,a
+      00007A                        519 00107$:
+      00007A E5*2C            [12]  520 	mov	a,_ud
+      00007C 45*2D            [12]  521 	orl	a,(_ud + 1)
+      00007E 70 01            [24]  522 	jnz	00135$
+      000080 22               [24]  523 	ret
+      000081                        524 00135$:
+      000081 85*2C*00         [24]  525 	mov	__mulint_PARM_2,_ud
+      000084 85*2D*01         [24]  526 	mov	(__mulint_PARM_2 + 1),(_ud + 1)
+      000087 90 FF ED         [24]  527 	mov	dptr,#0xffed
+      00008A C0 06            [24]  528 	push	ar6
+      00008C 12r00r00         [24]  529 	lcall	__mulint
+      00008F E5 82            [12]  530 	mov	a,dpl
+      000091 85 83 F0         [24]  531 	mov	b,dph
+      000094 D0 06            [24]  532 	pop	ar6
+      000096 24 13            [12]  533 	add	a,#0x13
+      000098 FD               [12]  534 	mov	r5,a
+      000099 E4               [12]  535 	clr	a
+      00009A 35 F0            [12]  536 	addc	a,b
+      00009C A2 E7            [12]  537 	mov	c,acc.7
+      00009E 13               [12]  538 	rrc	a
+      00009F CD               [12]  539 	xch	a,r5
+      0000A0 13               [12]  540 	rrc	a
+      0000A1 CD               [12]  541 	xch	a,r5
+      0000A2 FF               [12]  542 	mov	r7,a
+      0000A3 8E 03            [24]  543 	mov	ar3,r6
+      0000A5 7C 00            [12]  544 	mov	r4,#0x00
+      0000A7 EB               [12]  545 	mov	a,r3
+      0000A8 B5 05 05         [24]  546 	cjne	a,ar5,00136$
+      0000AB EC               [12]  547 	mov	a,r4
+      0000AC B5 07 01         [24]  548 	cjne	a,ar7,00136$
+      0000AF 22               [24]  549 	ret
+      0000B0                        550 00136$:
+                                    551 ;	./src/main.c:70: if (i > 10 || i < 9) { 
+      0000B0 EE               [12]  552 	mov	a,r6
+      0000B1 24 F5            [12]  553 	add	a,#0xff - 0x0a
+      0000B3 40 05            [24]  554 	jc	00101$
+      0000B5 BE 09 00         [24]  555 	cjne	r6,#0x09,00138$
+      0000B8                        556 00138$:
+      0000B8 50 2D            [24]  557 	jnc	00108$
+      0000BA                        558 00101$:
+                                    559 ;	./src/main.c:71: m_1[i] = m_1[i + ud] & m[i];
+      0000BA EE               [12]  560 	mov	a,r6
+      0000BB 24r00            [12]  561 	add	a,#_m_1
+      0000BD F9               [12]  562 	mov	r1,a
+      0000BE AF*2C            [24]  563 	mov	r7,_ud
+      0000C0 8E 05            [24]  564 	mov	ar5,r6
+      0000C2 EF               [12]  565 	mov	a,r7
+      0000C3 2D               [12]  566 	add	a,r5
+      0000C4 24r00            [12]  567 	add	a,#_m_1
+      0000C6 F8               [12]  568 	mov	r0,a
+      0000C7 86 07            [24]  569 	mov	ar7,@r0
+      0000C9 EE               [12]  570 	mov	a,r6
+      0000CA 24r14            [12]  571 	add	a,#_m
+      0000CC F8               [12]  572 	mov	r0,a
+      0000CD E6               [12]  573 	mov	a,@r0
+      0000CE 5F               [12]  574 	anl	a,r7
+      0000CF F7               [12]  575 	mov	@r1,a
+                                    576 ;	./src/main.c:72: m[i] = (m_1[i + ud] & m[i]) | m[i - ud]; 
+      0000D0 E5*2C            [12]  577 	mov	a,_ud
+      0000D2 FF               [12]  578 	mov	r7,a
+      0000D3 2D               [12]  579 	add	a,r5
+      0000D4 24r00            [12]  580 	add	a,#_m_1
+      0000D6 F9               [12]  581 	mov	r1,a
+      0000D7 87 04            [24]  582 	mov	ar4,@r1
+      0000D9 E6               [12]  583 	mov	a,@r0
+      0000DA FB               [12]  584 	mov	r3,a
+      0000DB 52 04            [12]  585 	anl	ar4,a
+      0000DD ED               [12]  586 	mov	a,r5
+      0000DE C3               [12]  587 	clr	c
+      0000DF 9F               [12]  588 	subb	a,r7
+      0000E0 24r14            [12]  589 	add	a,#_m
+      0000E2 F9               [12]  590 	mov	r1,a
+      0000E3 E7               [12]  591 	mov	a,@r1
+      0000E4 FF               [12]  592 	mov	r7,a
+      0000E5 4C               [12]  593 	orl	a,r4
+      0000E6 F6               [12]  594 	mov	@r0,a
+      0000E7                        595 00108$:
+                                    596 ;	./src/main.c:69: for (i = (17 * ud + 19) >> 1; ud != 0 && i != (-19 * ud + 19)>>1; i -= ud) {
+      0000E7 AF*2C            [24]  597 	mov	r7,_ud
+      0000E9 8E 05            [24]  598 	mov	ar5,r6
+      0000EB ED               [12]  599 	mov	a,r5
+      0000EC C3               [12]  600 	clr	c
+      0000ED 9F               [12]  601 	subb	a,r7
+      0000EE FE               [12]  602 	mov	r6,a
+                                    603 ;	./src/main.c:75: }
+      0000EF 02r00r7A         [24]  604 	ljmp	00107$
+                                    605 ;------------------------------------------------------------
+                                    606 ;Allocation info for local variables in function 'T0_isr'
+                                    607 ;------------------------------------------------------------
+                                    608 ;i                         Allocated to registers r7 
+                                    609 ;j                         Allocated to registers r6 
+                                    610 ;------------------------------------------------------------
+                                    611 ;	./src/main.c:77: void T0_isr(void) __interrupt (1) {
+                                    612 ;	-----------------------------------------
+                                    613 ;	 function T0_isr
+                                    614 ;	-----------------------------------------
+      0000F2                        615 _T0_isr:
+      0000F2 C0*00            [24]  616 	push	bits
+      0000F4 C0 E0            [24]  617 	push	acc
+      0000F6 C0 F0            [24]  618 	push	b
+      0000F8 C0 82            [24]  619 	push	dpl
+      0000FA C0 83            [24]  620 	push	dph
+      0000FC C0 07            [24]  621 	push	(0+7)
+      0000FE C0 06            [24]  622 	push	(0+6)
+      000100 C0 05            [24]  623 	push	(0+5)
+      000102 C0 04            [24]  624 	push	(0+4)
+      000104 C0 03            [24]  625 	push	(0+3)
+      000106 C0 02            [24]  626 	push	(0+2)
+      000108 C0 01            [24]  627 	push	(0+1)
+      00010A C0 00            [24]  628 	push	(0+0)
+      00010C C0 D0            [24]  629 	push	psw
+      00010E 75 D0 00         [24]  630 	mov	psw,#0x00
+                                    631 ;	./src/main.c:80: TH0 = (65536 - 50000) / 256;
+      000111 75 8C 3C         [24]  632 	mov	_TH0,#0x3c
+                                    633 ;	./src/main.c:81: TL0 = (65536 - 50000) % 256;
+      000114 75 8A B0         [24]  634 	mov	_TL0,#0xb0
+                                    635 ;	./src/main.c:83: accel = (int)(((int)Single_ReadI2C(208, 0x3D) << 8) | Single_ReadI2C(208, 0x3E));
+      000117 75*00 3D         [24]  636 	mov	_Single_ReadI2C_PARM_2,#0x3d
+      00011A 75 82 D0         [24]  637 	mov	dpl,#0xd0
+      00011D 12r00r00         [24]  638 	lcall	_Single_ReadI2C
+      000120 AE 82            [24]  639 	mov	r6,dpl
+      000122 7F 00            [12]  640 	mov	r7,#0x00
+      000124 75*00 3E         [24]  641 	mov	_Single_ReadI2C_PARM_2,#0x3e
+      000127 75 82 D0         [24]  642 	mov	dpl,#0xd0
+      00012A C0 07            [24]  643 	push	ar7
+      00012C C0 06            [24]  644 	push	ar6
+      00012E 12r00r00         [24]  645 	lcall	_Single_ReadI2C
+      000131 AD 82            [24]  646 	mov	r5,dpl
+      000133 D0 06            [24]  647 	pop	ar6
+      000135 D0 07            [24]  648 	pop	ar7
+      000137 7C 00            [12]  649 	mov	r4,#0x00
+      000139 ED               [12]  650 	mov	a,r5
+      00013A 4F               [12]  651 	orl	a,r7
+      00013B F5*28            [12]  652 	mov	_accel,a
+      00013D EC               [12]  653 	mov	a,r4
+      00013E 4E               [12]  654 	orl	a,r6
+      00013F F5*29            [12]  655 	mov	(_accel + 1),a
+                                    656 ;	./src/main.c:84: ud = 0;
+      000141 E4               [12]  657 	clr	a
+      000142 F5*2C            [12]  658 	mov	_ud,a
+      000144 F5*2D            [12]  659 	mov	(_ud + 1),a
+                                    660 ;	./src/main.c:85: if (accel > 5000) {
+      000146 C3               [12]  661 	clr	c
+      000147 74 88            [12]  662 	mov	a,#0x88
+      000149 95*28            [12]  663 	subb	a,_accel
+      00014B 74 93            [12]  664 	mov	a,#(0x13 ^ 0x80)
+      00014D 85*29 F0         [24]  665 	mov	b,(_accel + 1)
+      000150 63 F0 80         [24]  666 	xrl	b,#0x80
+      000153 95 F0            [12]  667 	subb	a,b
+      000155 50 12            [24]  668 	jnc	00102$
+                                    669 ;	./src/main.c:86: ud = 1;
+      000157 75*2C 01         [24]  670 	mov	_ud,#0x01
+      00015A 75*2D 00         [24]  671 	mov	(_ud + 1),#0x00
+                                    672 ;	./src/main.c:87: m_1[9] = m_1[19] = 255;
+      00015D 75*13 FF         [24]  673 	mov	(_m_1 + 0x0013),#0xff
+      000160 75*09 FF         [24]  674 	mov	(_m_1 + 0x0009),#0xff
+                                    675 ;	./src/main.c:88: m[0] = m[10] = 0;
+      000163 75*1E 00         [24]  676 	mov	(_m + 0x000a),#0x00
+      000166 75*14 00         [24]  677 	mov	_m,#0x00
+      000169                        678 00102$:
+                                    679 ;	./src/main.c:90: if (accel < -5000) {
+      000169 C3               [12]  680 	clr	c
+      00016A E5*28            [12]  681 	mov	a,_accel
+      00016C 94 78            [12]  682 	subb	a,#0x78
+      00016E E5*29            [12]  683 	mov	a,(_accel + 1)
+      000170 64 80            [12]  684 	xrl	a,#0x80
+      000172 94 6C            [12]  685 	subb	a,#0x6c
+      000174 50 12            [24]  686 	jnc	00104$
+                                    687 ;	./src/main.c:91: ud = -1;
+      000176 75*2C FF         [24]  688 	mov	_ud,#0xff
+      000179 75*2D FF         [24]  689 	mov	(_ud + 1),#0xff
+                                    690 ;	./src/main.c:92: m[9] = m[19] = 0;
+      00017C 75*27 00         [24]  691 	mov	(_m + 0x0013),#0x00
+      00017F 75*1D 00         [24]  692 	mov	(_m + 0x0009),#0x00
+                                    693 ;	./src/main.c:93: m_1[0] = m_1[10] = 255;
+      000182 75*0A FF         [24]  694 	mov	(_m_1 + 0x000a),#0xff
+      000185 75*00 FF         [24]  695 	mov	_m_1,#0xff
+      000188                        696 00104$:
+                                    697 ;	./src/main.c:95: if (cnt % 10 == 0) {
+      000188 75*00 0A         [24]  698 	mov	__modsint_PARM_2,#0x0a
+      00018B 75*01 00         [24]  699 	mov	(__modsint_PARM_2 + 1),#0x00
+      00018E 85*2A 82         [24]  700 	mov	dpl,_cnt
+      000191 85*2B 83         [24]  701 	mov	dph,(_cnt + 1)
+      000194 12r00r00         [24]  702 	lcall	__modsint
+      000197 E5 82            [12]  703 	mov	a,dpl
+      000199 85 83 F0         [24]  704 	mov	b,dph
+      00019C 45 F0            [12]  705 	orl	a,b
+      00019E 60 03            [24]  706 	jz	00340$
+      0001A0 02r02rFD         [24]  707 	ljmp	00131$
+      0001A3                        708 00340$:
+                                    709 ;	./src/main.c:96: if (cnt % 40 == 0 && m[8] << 7 && ud == 1) {m[8] -= 1; m[11] += 128;}
+      0001A3 75*00 28         [24]  710 	mov	__modsint_PARM_2,#0x28
+      0001A6 75*01 00         [24]  711 	mov	(__modsint_PARM_2 + 1),#0x00
+      0001A9 85*2A 82         [24]  712 	mov	dpl,_cnt
+      0001AC 85*2B 83         [24]  713 	mov	dph,(_cnt + 1)
+      0001AF 12r00r00         [24]  714 	lcall	__modsint
+      0001B2 E5 82            [12]  715 	mov	a,dpl
+      0001B4 85 83 F0         [24]  716 	mov	b,dph
+      0001B7 45 F0            [12]  717 	orl	a,b
+      0001B9 70 2A            [24]  718 	jnz	00106$
+      0001BB AF*1C            [24]  719 	mov	r7,(_m + 0x0008)
+      0001BD 8F 05            [24]  720 	mov	ar5,r7
+      0001BF E4               [12]  721 	clr	a
+      0001C0 54 01            [12]  722 	anl	a,#0x01
+      0001C2 A2 E0            [12]  723 	mov	c,acc.0
+      0001C4 CD               [12]  724 	xch	a,r5
+      0001C5 13               [12]  725 	rrc	a
+      0001C6 CD               [12]  726 	xch	a,r5
+      0001C7 13               [12]  727 	rrc	a
+      0001C8 CD               [12]  728 	xch	a,r5
+      0001C9 FE               [12]  729 	mov	r6,a
+      0001CA 4D               [12]  730 	orl	a,r5
+      0001CB 60 18            [24]  731 	jz	00106$
+      0001CD 74 01            [12]  732 	mov	a,#0x01
+      0001CF B5*2C 06         [24]  733 	cjne	a,_ud,00343$
+      0001D2 14               [12]  734 	dec	a
+      0001D3 B5*2D 02         [24]  735 	cjne	a,(_ud + 1),00343$
+      0001D6 80 02            [24]  736 	sjmp	00344$
+      0001D8                        737 00343$:
+      0001D8 80 0B            [24]  738 	sjmp	00106$
+      0001DA                        739 00344$:
+      0001DA EF               [12]  740 	mov	a,r7
+      0001DB 14               [12]  741 	dec	a
+      0001DC F5*1C            [12]  742 	mov	(_m + 0x0008),a
+      0001DE AF*1F            [24]  743 	mov	r7,(_m + 0x000b)
+      0001E0 74 80            [12]  744 	mov	a,#0x80
+      0001E2 2F               [12]  745 	add	a,r7
+      0001E3 F5*1F            [12]  746 	mov	(_m + 0x000b),a
+      0001E5                        747 00106$:
+                                    748 ;	./src/main.c:97: if (cnt % 40 == 0 && m[11] >> 7 && ud == -1) {m[11] -= 128; m[8] += 1;}
+      0001E5 75*00 28         [24]  749 	mov	__modsint_PARM_2,#0x28
+      0001E8 75*01 00         [24]  750 	mov	(__modsint_PARM_2 + 1),#0x00
+      0001EB 85*2A 82         [24]  751 	mov	dpl,_cnt
+      0001EE 85*2B 83         [24]  752 	mov	dph,(_cnt + 1)
+      0001F1 12r00r00         [24]  753 	lcall	__modsint
+      0001F4 E5 82            [12]  754 	mov	a,dpl
+      0001F6 85 83 F0         [24]  755 	mov	b,dph
+      0001F9 45 F0            [12]  756 	orl	a,b
+      0001FB 70 1C            [24]  757 	jnz	00163$
+      0001FD E5*1F            [12]  758 	mov	a,(_m + 0x000b)
+      0001FF FF               [12]  759 	mov	r7,a
+      000200 23               [12]  760 	rl	a
+      000201 54 01            [12]  761 	anl	a,#0x01
+      000203 FE               [12]  762 	mov	r6,a
+      000204 60 13            [24]  763 	jz	00163$
+      000206 74 FF            [12]  764 	mov	a,#0xff
+      000208 B5*2C 0E         [24]  765 	cjne	a,_ud,00163$
+      00020B B5*2D 0B         [24]  766 	cjne	a,(_ud + 1),00163$
+      00020E EF               [12]  767 	mov	a,r7
+      00020F 24 80            [12]  768 	add	a,#0x80
+      000211 F5*1F            [12]  769 	mov	(_m + 0x000b),a
+      000213 E5*1C            [12]  770 	mov	a,(_m + 0x0008)
+      000215 FF               [12]  771 	mov	r7,a
+      000216 04               [12]  772 	inc	a
+      000217 F5*1C            [12]  773 	mov	(_m + 0x0008),a
+                                    774 ;	./src/main.c:98: for (i = 1; i < 9; i++) Sendbyte7219(i, m[i], i, m[i + 10]);
+      000219                        775 00163$:
+      000219 7F 01            [12]  776 	mov	r7,#0x01
+      00021B                        777 00138$:
+      00021B EF               [12]  778 	mov	a,r7
+      00021C 24r14            [12]  779 	add	a,#_m
+      00021E F9               [12]  780 	mov	r1,a
+      00021F 87*00            [24]  781 	mov	_Sendbyte7219_PARM_2,@r1
+      000221 8F 06            [24]  782 	mov	ar6,r7
+      000223 74 0A            [12]  783 	mov	a,#0x0a
+      000225 2E               [12]  784 	add	a,r6
+      000226 24r14            [12]  785 	add	a,#_m
+      000228 F9               [12]  786 	mov	r1,a
+      000229 87*02            [24]  787 	mov	_Sendbyte7219_PARM_4,@r1
+      00022B 8F*01            [24]  788 	mov	_Sendbyte7219_PARM_3,r7
+      00022D 8F 82            [24]  789 	mov	dpl,r7
+      00022F C0 07            [24]  790 	push	ar7
+      000231 12r00r00         [24]  791 	lcall	_Sendbyte7219
+      000234 D0 07            [24]  792 	pop	ar7
+      000236 0F               [12]  793 	inc	r7
+      000237 BF 09 00         [24]  794 	cjne	r7,#0x09,00349$
+      00023A                        795 00349$:
+      00023A 40 DF            [24]  796 	jc	00138$
+                                    797 ;	./src/main.c:99: if (cnt % 30 == 0 || cnt % 50 == 0) Shift();
+      00023C 75*00 1E         [24]  798 	mov	__modsint_PARM_2,#0x1e
+      00023F 75*01 00         [24]  799 	mov	(__modsint_PARM_2 + 1),#0x00
+      000242 85*2A 82         [24]  800 	mov	dpl,_cnt
+      000245 85*2B 83         [24]  801 	mov	dph,(_cnt + 1)
+      000248 12r00r00         [24]  802 	lcall	__modsint
+      00024B E5 82            [12]  803 	mov	a,dpl
+      00024D 85 83 F0         [24]  804 	mov	b,dph
+      000250 45 F0            [12]  805 	orl	a,b
+      000252 60 18            [24]  806 	jz	00114$
+      000254 75*00 32         [24]  807 	mov	__modsint_PARM_2,#0x32
+      000257 75*01 00         [24]  808 	mov	(__modsint_PARM_2 + 1),#0x00
+      00025A 85*2A 82         [24]  809 	mov	dpl,_cnt
+      00025D 85*2B 83         [24]  810 	mov	dph,(_cnt + 1)
+      000260 12r00r00         [24]  811 	lcall	__modsint
+      000263 E5 82            [12]  812 	mov	a,dpl
+      000265 85 83 F0         [24]  813 	mov	b,dph
+      000268 45 F0            [12]  814 	orl	a,b
+      00026A 70 03            [24]  815 	jnz	00173$
+      00026C                        816 00114$:
+      00026C 12r00r5C         [24]  817 	lcall	_Shift
+                                    818 ;	./src/main.c:100: for (i = 1; i < 19; i++) {
+      00026F                        819 00173$:
+      00026F 7F 01            [12]  820 	mov	r7,#0x01
+      000271                        821 00146$:
+                                    822 ;	./src/main.c:101: if (ud == 1) { 
+      000271 74 01            [12]  823 	mov	a,#0x01
+      000273 B5*2C 06         [24]  824 	cjne	a,_ud,00353$
+      000276 14               [12]  825 	dec	a
+      000277 B5*2D 02         [24]  826 	cjne	a,(_ud + 1),00353$
+      00027A 80 02            [24]  827 	sjmp	00354$
+      00027C                        828 00353$:
+      00027C 80 1D            [24]  829 	sjmp	00124$
+      00027E                        830 00354$:
+                                    831 ;	./src/main.c:102: for (j = 1; (m[i] & j) > 0; j <<= 1); 
+      00027E 7E 01            [12]  832 	mov	r6,#0x01
+      000280 EF               [12]  833 	mov	a,r7
+      000281 24r14            [12]  834 	add	a,#_m
+      000283 F9               [12]  835 	mov	r1,a
+      000284                        836 00141$:
+      000284 87 05            [24]  837 	mov	ar5,@r1
+      000286 EE               [12]  838 	mov	a,r6
+      000287 5D               [12]  839 	anl	a,r5
+      000288 60 07            [24]  840 	jz	00117$
+      00028A 8E 04            [24]  841 	mov	ar4,r6
+      00028C EC               [12]  842 	mov	a,r4
+      00028D 2C               [12]  843 	add	a,r4
+      00028E FE               [12]  844 	mov	r6,a
+      00028F 80 F3            [24]  845 	sjmp	00141$
+      000291                        846 00117$:
+                                    847 ;	./src/main.c:103: m[i] = m[i] >> 1  | (j - 1);
+      000291 ED               [12]  848 	mov	a,r5
+      000292 C3               [12]  849 	clr	c
+      000293 13               [12]  850 	rrc	a
+      000294 FD               [12]  851 	mov	r5,a
+      000295 EE               [12]  852 	mov	a,r6
+      000296 14               [12]  853 	dec	a
+      000297 4D               [12]  854 	orl	a,r5
+      000298 F7               [12]  855 	mov	@r1,a
+      000299 80 29            [24]  856 	sjmp	00147$
+      00029B                        857 00124$:
+                                    858 ;	./src/main.c:104: } else if (ud == -1) { 
+      00029B 74 FF            [12]  859 	mov	a,#0xff
+      00029D B5*2C 24         [24]  860 	cjne	a,_ud,00147$
+      0002A0 B5*2D 21         [24]  861 	cjne	a,(_ud + 1),00147$
+                                    862 ;	./src/main.c:105: for (j = 128; (m[i] & j) > 0; j >>= 1); 
+      0002A3 7E 80            [12]  863 	mov	r6,#0x80
+      0002A5 EF               [12]  864 	mov	a,r7
+      0002A6 24r14            [12]  865 	add	a,#_m
+      0002A8 F9               [12]  866 	mov	r1,a
+      0002A9                        867 00144$:
+      0002A9 87 05            [24]  868 	mov	ar5,@r1
+      0002AB EE               [12]  869 	mov	a,r6
+      0002AC 5D               [12]  870 	anl	a,r5
+      0002AD 60 06            [24]  871 	jz	00118$
+      0002AF EE               [12]  872 	mov	a,r6
+      0002B0 C3               [12]  873 	clr	c
+      0002B1 13               [12]  874 	rrc	a
+      0002B2 FE               [12]  875 	mov	r6,a
+      0002B3 80 F4            [24]  876 	sjmp	00144$
+      0002B5                        877 00118$:
+                                    878 ;	./src/main.c:106: if (j != 0) m[i] = (m[i] << 1) | (128 - j) << 1; 
+      0002B5 EE               [12]  879 	mov	a,r6
+      0002B6 60 0C            [24]  880 	jz	00147$
+      0002B8 ED               [12]  881 	mov	a,r5
+      0002B9 2D               [12]  882 	add	a,r5
+      0002BA FD               [12]  883 	mov	r5,a
+      0002BB 74 80            [12]  884 	mov	a,#0x80
+      0002BD C3               [12]  885 	clr	c
+      0002BE 9E               [12]  886 	subb	a,r6
+      0002BF 25 E0            [12]  887 	add	a,acc
+      0002C1 FE               [12]  888 	mov	r6,a
+      0002C2 4D               [12]  889 	orl	a,r5
+      0002C3 F7               [12]  890 	mov	@r1,a
+      0002C4                        891 00147$:
+                                    892 ;	./src/main.c:100: for (i = 1; i < 19; i++) {
+      0002C4 0F               [12]  893 	inc	r7
+      0002C5 BF 13 00         [24]  894 	cjne	r7,#0x13,00360$
+      0002C8                        895 00360$:
+      0002C8 40 A7            [24]  896 	jc	00146$
+                                    897 ;	./src/main.c:109: if (cnt % 30 != 0 && cnt % 50 != 0) Shift();
+      0002CA 75*00 1E         [24]  898 	mov	__modsint_PARM_2,#0x1e
+      0002CD 75*01 00         [24]  899 	mov	(__modsint_PARM_2 + 1),#0x00
+      0002D0 85*2A 82         [24]  900 	mov	dpl,_cnt
+      0002D3 85*2B 83         [24]  901 	mov	dph,(_cnt + 1)
+      0002D6 12r00r00         [24]  902 	lcall	__modsint
+      0002D9 E5 82            [12]  903 	mov	a,dpl
+      0002DB 85 83 F0         [24]  904 	mov	b,dph
+      0002DE 45 F0            [12]  905 	orl	a,b
+      0002E0 60 1B            [24]  906 	jz	00131$
+      0002E2 75*00 32         [24]  907 	mov	__modsint_PARM_2,#0x32
+      0002E5 75*01 00         [24]  908 	mov	(__modsint_PARM_2 + 1),#0x00
+      0002E8 85*2A 82         [24]  909 	mov	dpl,_cnt
+      0002EB 85*2B 83         [24]  910 	mov	dph,(_cnt + 1)
+      0002EE 12r00r00         [24]  911 	lcall	__modsint
+      0002F1 E5 82            [12]  912 	mov	a,dpl
+      0002F3 85 83 F0         [24]  913 	mov	b,dph
+      0002F6 45 F0            [12]  914 	orl	a,b
+      0002F8 60 03            [24]  915 	jz	00131$
+      0002FA 12r00r5C         [24]  916 	lcall	_Shift
+      0002FD                        917 00131$:
+                                    918 ;	./src/main.c:111: if (++cnt == 2560 || cnt == 2570 || cnt == 2580) Call();
+      0002FD 05*2A            [12]  919 	inc	_cnt
+      0002FF E4               [12]  920 	clr	a
+      000300 B5*2A 02         [24]  921 	cjne	a,_cnt,00364$
+      000303 05*2B            [12]  922 	inc	(_cnt + 1)
+      000305                        923 00364$:
+      000305 E4               [12]  924 	clr	a
+      000306 B5*2A 07         [24]  925 	cjne	a,_cnt,00365$
+      000309 74 0A            [12]  926 	mov	a,#0x0a
+      00030B B5*2B 02         [24]  927 	cjne	a,(_cnt + 1),00365$
+      00030E 80 14            [24]  928 	sjmp	00132$
+      000310                        929 00365$:
+      000310 74 0A            [12]  930 	mov	a,#0x0a
+      000312 B5*2A 05         [24]  931 	cjne	a,_cnt,00366$
+      000315 B5*2B 02         [24]  932 	cjne	a,(_cnt + 1),00366$
+      000318 80 0A            [24]  933 	sjmp	00132$
+      00031A                        934 00366$:
+      00031A 74 14            [12]  935 	mov	a,#0x14
+      00031C B5*2A 08         [24]  936 	cjne	a,_cnt,00133$
+      00031F 74 0A            [12]  937 	mov	a,#0x0a
+      000321 B5*2B 03         [24]  938 	cjne	a,(_cnt + 1),00133$
+      000324                        939 00132$:
+      000324 12r00r29         [24]  940 	lcall	_Call
+      000327                        941 00133$:
+                                    942 ;	./src/main.c:112: if (cnt == 2580) cnt = 20;
+      000327 74 14            [12]  943 	mov	a,#0x14
+      000329 B5*2A 0B         [24]  944 	cjne	a,_cnt,00148$
+      00032C 74 0A            [12]  945 	mov	a,#0x0a
+      00032E B5*2B 06         [24]  946 	cjne	a,(_cnt + 1),00148$
+      000331 75*2A 14         [24]  947 	mov	_cnt,#0x14
+      000334 75*2B 00         [24]  948 	mov	(_cnt + 1),#0x00
+      000337                        949 00148$:
+                                    950 ;	./src/main.c:113: }
+      000337 D0 D0            [24]  951 	pop	psw
+      000339 D0 00            [24]  952 	pop	(0+0)
+      00033B D0 01            [24]  953 	pop	(0+1)
+      00033D D0 02            [24]  954 	pop	(0+2)
+      00033F D0 03            [24]  955 	pop	(0+3)
+      000341 D0 04            [24]  956 	pop	(0+4)
+      000343 D0 05            [24]  957 	pop	(0+5)
+      000345 D0 06            [24]  958 	pop	(0+6)
+      000347 D0 07            [24]  959 	pop	(0+7)
+      000349 D0 83            [24]  960 	pop	dph
+      00034B D0 82            [24]  961 	pop	dpl
+      00034D D0 F0            [24]  962 	pop	b
+      00034F D0 E0            [24]  963 	pop	acc
+      000351 D0*00            [24]  964 	pop	bits
+      000353 32               [24]  965 	reti
+                                    966 ;------------------------------------------------------------
+                                    967 ;Allocation info for local variables in function 'main'
+                                    968 ;------------------------------------------------------------
+                                    969 ;	./src/main.c:115: void main(void) {
+                                    970 ;	-----------------------------------------
+                                    971 ;	 function main
+                                    972 ;	-----------------------------------------
+      000354                        973 _main:
+                                    974 ;	./src/main.c:117: Sendbyte7219(0x0C, 0x01, 0x0C, 0x01);
+      000354 75*00 01         [24]  975 	mov	_Sendbyte7219_PARM_2,#0x01
+      000357 75*01 0C         [24]  976 	mov	_Sendbyte7219_PARM_3,#0x0c
+      00035A 75*02 01         [24]  977 	mov	_Sendbyte7219_PARM_4,#0x01
+      00035D 75 82 0C         [24]  978 	mov	dpl,#0x0c
+      000360 12r00r00         [24]  979 	lcall	_Sendbyte7219
+                                    980 ;	./src/main.c:118: Sendbyte7219(0x0F, 0x00, 0x0F, 0x00);
+      000363 75*00 00         [24]  981 	mov	_Sendbyte7219_PARM_2,#0x00
+      000366 75*01 0F         [24]  982 	mov	_Sendbyte7219_PARM_3,#0x0f
+      000369 75*02 00         [24]  983 	mov	_Sendbyte7219_PARM_4,#0x00
+      00036C 75 82 0F         [24]  984 	mov	dpl,#0x0f
+      00036F 12r00r00         [24]  985 	lcall	_Sendbyte7219
+                                    986 ;	./src/main.c:119: Sendbyte7219(0x09, 0x00, 0x09, 0x00);
+      000372 75*00 00         [24]  987 	mov	_Sendbyte7219_PARM_2,#0x00
+      000375 75*01 09         [24]  988 	mov	_Sendbyte7219_PARM_3,#0x09
+      000378 75*02 00         [24]  989 	mov	_Sendbyte7219_PARM_4,#0x00
+      00037B 75 82 09         [24]  990 	mov	dpl,#0x09
+      00037E 12r00r00         [24]  991 	lcall	_Sendbyte7219
+                                    992 ;	./src/main.c:120: Sendbyte7219(0x0B, 0x07, 0x0B, 0x07);
+      000381 75*00 07         [24]  993 	mov	_Sendbyte7219_PARM_2,#0x07
+      000384 75*01 0B         [24]  994 	mov	_Sendbyte7219_PARM_3,#0x0b
+      000387 75*02 07         [24]  995 	mov	_Sendbyte7219_PARM_4,#0x07
+      00038A 75 82 0B         [24]  996 	mov	dpl,#0x0b
+      00038D 12r00r00         [24]  997 	lcall	_Sendbyte7219
+                                    998 ;	./src/main.c:121: Sendbyte7219(0x0A, 0x00, 0x0A, 0x00);
+      000390 75*00 00         [24]  999 	mov	_Sendbyte7219_PARM_2,#0x00
+      000393 75*01 0A         [24] 1000 	mov	_Sendbyte7219_PARM_3,#0x0a
+      000396 75*02 00         [24] 1001 	mov	_Sendbyte7219_PARM_4,#0x00
+      000399 75 82 0A         [24] 1002 	mov	dpl,#0x0a
+      00039C 12r00r00         [24] 1003 	lcall	_Sendbyte7219
+                                   1004 ;	./src/main.c:126: Single_WriteI2C(208, 0x6B, 0);
+      00039F 75*00 6B         [24] 1005 	mov	_Single_WriteI2C_PARM_2,#0x6b
+      0003A2 75*00 00         [24] 1006 	mov	_Single_WriteI2C_PARM_3,#0x00
+      0003A5 75 82 D0         [24] 1007 	mov	dpl,#0xd0
+      0003A8 12r00r00         [24] 1008 	lcall	_Single_WriteI2C
+                                   1009 ;	./src/main.c:138: TMOD = 0x01;						// Set Timer 1 to  mode 0 & Timer 0 mode 1. (16-bit timer)
+      0003AB 75 89 01         [24] 1010 	mov	_TMOD,#0x01
+                                   1011 ;	./src/main.c:139: TH0  = (65536 - 50000) / 256;		// Load initial higher 8 bits into Timer 0
+      0003AE 75 8C 3C         [24] 1012 	mov	_TH0,#0x3c
+                                   1013 ;	./src/main.c:140: TL0  = (65536 - 50000) % 256;		// Load initial lower 8 bits into Timer 0
+      0003B1 75 8A B0         [24] 1014 	mov	_TL0,#0xb0
+                                   1015 ;	./src/main.c:141: ET0  = 1;							// Enable Timer 0 interrupt
+                                   1016 ;	assignBit
+      0003B4 D2 A9            [12] 1017 	setb	_ET0
+                                   1018 ;	./src/main.c:142: EA   = 1;							// Enable all interrupt
+                                   1019 ;	assignBit
+      0003B6 D2 AF            [12] 1020 	setb	_EA
+                                   1021 ;	./src/main.c:143: TR0  = 1;							// Start Timer 0
+                                   1022 ;	assignBit
+      0003B8 D2 8C            [12] 1023 	setb	_TR0
+                                   1024 ;	./src/main.c:145: while(1);
+      0003BA                       1025 00102$:
+                                   1026 ;	./src/main.c:146: }
+      0003BA 80 FE            [24] 1027 	sjmp	00102$
+                                   1028 	.area CSEG    (CODE)
+                                   1029 	.area CONST   (CODE)
+                                   1030 	.area XINIT   (CODE)
+                                   1031 	.area CABS    (ABS,CODE)
