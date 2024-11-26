@@ -1,0 +1,741 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.1.0 #12072 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module program
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _hex_size
+                                     12 	.globl _hex_file
+                                     13 	.globl _delay_ms
+                                     14 	.globl _AT89S51_Read_Byte
+                                     15 	.globl _AT89S51_Write_Byte
+                                     16 	.globl _AT89S51_Chip_Erase
+                                     17 	.globl _AT89S51_Prog_En
+                                     18 	.globl _CY
+                                     19 	.globl _AC
+                                     20 	.globl _F0
+                                     21 	.globl _RS1
+                                     22 	.globl _RS0
+                                     23 	.globl _OV
+                                     24 	.globl _F1
+                                     25 	.globl _P
+                                     26 	.globl _PS
+                                     27 	.globl _PT1
+                                     28 	.globl _PX1
+                                     29 	.globl _PT0
+                                     30 	.globl _PX0
+                                     31 	.globl _RD
+                                     32 	.globl _WR
+                                     33 	.globl _T1
+                                     34 	.globl _T0
+                                     35 	.globl _INT1
+                                     36 	.globl _INT0
+                                     37 	.globl _TXD
+                                     38 	.globl _RXD
+                                     39 	.globl _P3_7
+                                     40 	.globl _P3_6
+                                     41 	.globl _P3_5
+                                     42 	.globl _P3_4
+                                     43 	.globl _P3_3
+                                     44 	.globl _P3_2
+                                     45 	.globl _P3_1
+                                     46 	.globl _P3_0
+                                     47 	.globl _EA
+                                     48 	.globl _ES
+                                     49 	.globl _ET1
+                                     50 	.globl _EX1
+                                     51 	.globl _ET0
+                                     52 	.globl _EX0
+                                     53 	.globl _P2_7
+                                     54 	.globl _P2_6
+                                     55 	.globl _P2_5
+                                     56 	.globl _P2_4
+                                     57 	.globl _P2_3
+                                     58 	.globl _P2_2
+                                     59 	.globl _P2_1
+                                     60 	.globl _P2_0
+                                     61 	.globl _SM0
+                                     62 	.globl _SM1
+                                     63 	.globl _SM2
+                                     64 	.globl _REN
+                                     65 	.globl _TB8
+                                     66 	.globl _RB8
+                                     67 	.globl _TI
+                                     68 	.globl _RI
+                                     69 	.globl _P1_7
+                                     70 	.globl _P1_6
+                                     71 	.globl _P1_5
+                                     72 	.globl _P1_4
+                                     73 	.globl _P1_3
+                                     74 	.globl _P1_2
+                                     75 	.globl _P1_1
+                                     76 	.globl _P1_0
+                                     77 	.globl _TF1
+                                     78 	.globl _TR1
+                                     79 	.globl _TF0
+                                     80 	.globl _TR0
+                                     81 	.globl _IE1
+                                     82 	.globl _IT1
+                                     83 	.globl _IE0
+                                     84 	.globl _IT0
+                                     85 	.globl _P0_7
+                                     86 	.globl _P0_6
+                                     87 	.globl _P0_5
+                                     88 	.globl _P0_4
+                                     89 	.globl _P0_3
+                                     90 	.globl _P0_2
+                                     91 	.globl _P0_1
+                                     92 	.globl _P0_0
+                                     93 	.globl _B
+                                     94 	.globl _ACC
+                                     95 	.globl _PSW
+                                     96 	.globl _IP
+                                     97 	.globl _P3
+                                     98 	.globl _IE
+                                     99 	.globl _P2
+                                    100 	.globl _SBUF
+                                    101 	.globl _SCON
+                                    102 	.globl _P1
+                                    103 	.globl _TH1
+                                    104 	.globl _TH0
+                                    105 	.globl _TL1
+                                    106 	.globl _TL0
+                                    107 	.globl _TMOD
+                                    108 	.globl _TCON
+                                    109 	.globl _PCON
+                                    110 	.globl _DPH
+                                    111 	.globl _DPL
+                                    112 	.globl _SP
+                                    113 	.globl _P0
+                                    114 	.globl _AT89S51_Program_write
+                                    115 	.globl _AT89S51_Program_read
+                                    116 	.globl _AT89S51_Program_erase
+                                    117 ;--------------------------------------------------------
+                                    118 ; special function registers
+                                    119 ;--------------------------------------------------------
+                                    120 	.area RSEG    (ABS,DATA)
+      000000                        121 	.org 0x0000
+                           000080   122 _P0	=	0x0080
+                           000081   123 _SP	=	0x0081
+                           000082   124 _DPL	=	0x0082
+                           000083   125 _DPH	=	0x0083
+                           000087   126 _PCON	=	0x0087
+                           000088   127 _TCON	=	0x0088
+                           000089   128 _TMOD	=	0x0089
+                           00008A   129 _TL0	=	0x008a
+                           00008B   130 _TL1	=	0x008b
+                           00008C   131 _TH0	=	0x008c
+                           00008D   132 _TH1	=	0x008d
+                           000090   133 _P1	=	0x0090
+                           000098   134 _SCON	=	0x0098
+                           000099   135 _SBUF	=	0x0099
+                           0000A0   136 _P2	=	0x00a0
+                           0000A8   137 _IE	=	0x00a8
+                           0000B0   138 _P3	=	0x00b0
+                           0000B8   139 _IP	=	0x00b8
+                           0000D0   140 _PSW	=	0x00d0
+                           0000E0   141 _ACC	=	0x00e0
+                           0000F0   142 _B	=	0x00f0
+                                    143 ;--------------------------------------------------------
+                                    144 ; special function bits
+                                    145 ;--------------------------------------------------------
+                                    146 	.area RSEG    (ABS,DATA)
+      000000                        147 	.org 0x0000
+                           000080   148 _P0_0	=	0x0080
+                           000081   149 _P0_1	=	0x0081
+                           000082   150 _P0_2	=	0x0082
+                           000083   151 _P0_3	=	0x0083
+                           000084   152 _P0_4	=	0x0084
+                           000085   153 _P0_5	=	0x0085
+                           000086   154 _P0_6	=	0x0086
+                           000087   155 _P0_7	=	0x0087
+                           000088   156 _IT0	=	0x0088
+                           000089   157 _IE0	=	0x0089
+                           00008A   158 _IT1	=	0x008a
+                           00008B   159 _IE1	=	0x008b
+                           00008C   160 _TR0	=	0x008c
+                           00008D   161 _TF0	=	0x008d
+                           00008E   162 _TR1	=	0x008e
+                           00008F   163 _TF1	=	0x008f
+                           000090   164 _P1_0	=	0x0090
+                           000091   165 _P1_1	=	0x0091
+                           000092   166 _P1_2	=	0x0092
+                           000093   167 _P1_3	=	0x0093
+                           000094   168 _P1_4	=	0x0094
+                           000095   169 _P1_5	=	0x0095
+                           000096   170 _P1_6	=	0x0096
+                           000097   171 _P1_7	=	0x0097
+                           000098   172 _RI	=	0x0098
+                           000099   173 _TI	=	0x0099
+                           00009A   174 _RB8	=	0x009a
+                           00009B   175 _TB8	=	0x009b
+                           00009C   176 _REN	=	0x009c
+                           00009D   177 _SM2	=	0x009d
+                           00009E   178 _SM1	=	0x009e
+                           00009F   179 _SM0	=	0x009f
+                           0000A0   180 _P2_0	=	0x00a0
+                           0000A1   181 _P2_1	=	0x00a1
+                           0000A2   182 _P2_2	=	0x00a2
+                           0000A3   183 _P2_3	=	0x00a3
+                           0000A4   184 _P2_4	=	0x00a4
+                           0000A5   185 _P2_5	=	0x00a5
+                           0000A6   186 _P2_6	=	0x00a6
+                           0000A7   187 _P2_7	=	0x00a7
+                           0000A8   188 _EX0	=	0x00a8
+                           0000A9   189 _ET0	=	0x00a9
+                           0000AA   190 _EX1	=	0x00aa
+                           0000AB   191 _ET1	=	0x00ab
+                           0000AC   192 _ES	=	0x00ac
+                           0000AF   193 _EA	=	0x00af
+                           0000B0   194 _P3_0	=	0x00b0
+                           0000B1   195 _P3_1	=	0x00b1
+                           0000B2   196 _P3_2	=	0x00b2
+                           0000B3   197 _P3_3	=	0x00b3
+                           0000B4   198 _P3_4	=	0x00b4
+                           0000B5   199 _P3_5	=	0x00b5
+                           0000B6   200 _P3_6	=	0x00b6
+                           0000B7   201 _P3_7	=	0x00b7
+                           0000B0   202 _RXD	=	0x00b0
+                           0000B1   203 _TXD	=	0x00b1
+                           0000B2   204 _INT0	=	0x00b2
+                           0000B3   205 _INT1	=	0x00b3
+                           0000B4   206 _T0	=	0x00b4
+                           0000B5   207 _T1	=	0x00b5
+                           0000B6   208 _WR	=	0x00b6
+                           0000B7   209 _RD	=	0x00b7
+                           0000B8   210 _PX0	=	0x00b8
+                           0000B9   211 _PT0	=	0x00b9
+                           0000BA   212 _PX1	=	0x00ba
+                           0000BB   213 _PT1	=	0x00bb
+                           0000BC   214 _PS	=	0x00bc
+                           0000D0   215 _P	=	0x00d0
+                           0000D1   216 _F1	=	0x00d1
+                           0000D2   217 _OV	=	0x00d2
+                           0000D3   218 _RS0	=	0x00d3
+                           0000D4   219 _RS1	=	0x00d4
+                           0000D5   220 _F0	=	0x00d5
+                           0000D6   221 _AC	=	0x00d6
+                           0000D7   222 _CY	=	0x00d7
+                                    223 ;--------------------------------------------------------
+                                    224 ; overlayable register banks
+                                    225 ;--------------------------------------------------------
+                                    226 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        227 	.ds 8
+                                    228 ;--------------------------------------------------------
+                                    229 ; internal ram data
+                                    230 ;--------------------------------------------------------
+                                    231 	.area DSEG    (DATA)
+                                    232 ;--------------------------------------------------------
+                                    233 ; overlayable items in internal ram 
+                                    234 ;--------------------------------------------------------
+                                    235 ;--------------------------------------------------------
+                                    236 ; indirectly addressable internal ram data
+                                    237 ;--------------------------------------------------------
+                                    238 	.area ISEG    (DATA)
+                                    239 ;--------------------------------------------------------
+                                    240 ; absolute internal ram data
+                                    241 ;--------------------------------------------------------
+                                    242 	.area IABS    (ABS,DATA)
+                                    243 	.area IABS    (ABS,DATA)
+                                    244 ;--------------------------------------------------------
+                                    245 ; bit data
+                                    246 ;--------------------------------------------------------
+                                    247 	.area BSEG    (BIT)
+                                    248 ;--------------------------------------------------------
+                                    249 ; paged external ram data
+                                    250 ;--------------------------------------------------------
+                                    251 	.area PSEG    (PAG,XDATA)
+                                    252 ;--------------------------------------------------------
+                                    253 ; external ram data
+                                    254 ;--------------------------------------------------------
+                                    255 	.area XSEG    (XDATA)
+                                    256 ;--------------------------------------------------------
+                                    257 ; absolute external ram data
+                                    258 ;--------------------------------------------------------
+                                    259 	.area XABS    (ABS,XDATA)
+                                    260 ;--------------------------------------------------------
+                                    261 ; external initialized ram data
+                                    262 ;--------------------------------------------------------
+                                    263 	.area XISEG   (XDATA)
+                                    264 	.area HOME    (CODE)
+                                    265 	.area GSINIT0 (CODE)
+                                    266 	.area GSINIT1 (CODE)
+                                    267 	.area GSINIT2 (CODE)
+                                    268 	.area GSINIT3 (CODE)
+                                    269 	.area GSINIT4 (CODE)
+                                    270 	.area GSINIT5 (CODE)
+                                    271 	.area GSINIT  (CODE)
+                                    272 	.area GSFINAL (CODE)
+                                    273 	.area CSEG    (CODE)
+                                    274 ;--------------------------------------------------------
+                                    275 ; global & static initialisations
+                                    276 ;--------------------------------------------------------
+                                    277 	.area HOME    (CODE)
+                                    278 	.area GSINIT  (CODE)
+                                    279 	.area GSFINAL (CODE)
+                                    280 	.area GSINIT  (CODE)
+                                    281 ;--------------------------------------------------------
+                                    282 ; Home
+                                    283 ;--------------------------------------------------------
+                                    284 	.area HOME    (CODE)
+                                    285 	.area HOME    (CODE)
+                                    286 ;--------------------------------------------------------
+                                    287 ; code
+                                    288 ;--------------------------------------------------------
+                                    289 	.area CSEG    (CODE)
+                                    290 ;------------------------------------------------------------
+                                    291 ;Allocation info for local variables in function 'AT89S51_Program_write'
+                                    292 ;------------------------------------------------------------
+                                    293 ;spr_r_buf                 Allocated to registers r7 
+                                    294 ;program_cnt               Allocated to registers r6 r7 
+                                    295 ;------------------------------------------------------------
+                                    296 ;	./src/program.c:7: unsigned char AT89S51_Program_write(void)
+                                    297 ;	-----------------------------------------
+                                    298 ;	 function AT89S51_Program_write
+                                    299 ;	-----------------------------------------
+      0001C8                        300 _AT89S51_Program_write:
+                           000007   301 	ar7 = 0x07
+                           000006   302 	ar6 = 0x06
+                           000005   303 	ar5 = 0x05
+                           000004   304 	ar4 = 0x04
+                           000003   305 	ar3 = 0x03
+                           000002   306 	ar2 = 0x02
+                           000001   307 	ar1 = 0x01
+                           000000   308 	ar0 = 0x00
+                                    309 ;	./src/program.c:13: AT8051_MOSI = 0;
+                                    310 ;	assignBit
+      0001C8 C2 80            [12]  311 	clr	_P0_0
+                                    312 ;	./src/program.c:14: AT8051_SCK = 0;
+                                    313 ;	assignBit
+      0001CA C2 82            [12]  314 	clr	_P0_2
+                                    315 ;	./src/program.c:15: delay_ms(1);
+      0001CC 90 00 01         [24]  316 	mov	dptr,#0x0001
+      0001CF 12 04 0D         [24]  317 	lcall	_delay_ms
+                                    318 ;	./src/program.c:16: AT8051_RST = 1;
+                                    319 ;	assignBit
+      0001D2 D2 83            [12]  320 	setb	_P0_3
+                                    321 ;	./src/program.c:17: delay_ms(10);
+      0001D4 90 00 0A         [24]  322 	mov	dptr,#0x000a
+      0001D7 12 04 0D         [24]  323 	lcall	_delay_ms
+                                    324 ;	./src/program.c:20: spr_r_buf = AT89S51_Prog_En();
+      0001DA 12 04 CD         [24]  325 	lcall	_AT89S51_Prog_En
+      0001DD AF 82            [24]  326 	mov	r7,dpl
+                                    327 ;	./src/program.c:21: if (spr_r_buf != 0x69) {
+      0001DF BF 69 02         [24]  328 	cjne	r7,#0x69,00122$
+      0001E2 80 16            [24]  329 	sjmp	00102$
+      0001E4                        330 00122$:
+                                    331 ;	./src/program.c:22: AT8051_RST = 0;
+                                    332 ;	assignBit
+      0001E4 C2 83            [12]  333 	clr	_P0_3
+                                    334 ;	./src/program.c:23: delay_ms(100);
+      0001E6 90 00 64         [24]  335 	mov	dptr,#0x0064
+      0001E9 12 04 0D         [24]  336 	lcall	_delay_ms
+                                    337 ;	./src/program.c:24: AT8051_MOSI = 1;
+                                    338 ;	assignBit
+      0001EC D2 80            [12]  339 	setb	_P0_0
+                                    340 ;	./src/program.c:25: AT8051_SCK = 1;
+                                    341 ;	assignBit
+      0001EE D2 82            [12]  342 	setb	_P0_2
+                                    343 ;	./src/program.c:26: delay_ms(1000);
+      0001F0 90 03 E8         [24]  344 	mov	dptr,#0x03e8
+      0001F3 12 04 0D         [24]  345 	lcall	_delay_ms
+                                    346 ;	./src/program.c:28: return HAL_Prog_En_ERROR;
+      0001F6 75 82 01         [24]  347 	mov	dpl,#0x01
+      0001F9 22               [24]  348 	ret
+      0001FA                        349 00102$:
+                                    350 ;	./src/program.c:32: AT89S51_Chip_Erase();
+      0001FA 12 04 FA         [24]  351 	lcall	_AT89S51_Chip_Erase
+                                    352 ;	./src/program.c:33: delay_ms(1000);
+      0001FD 90 03 E8         [24]  353 	mov	dptr,#0x03e8
+      000200 12 04 0D         [24]  354 	lcall	_delay_ms
+                                    355 ;	./src/program.c:38: for (program_cnt = 0; program_cnt < hex_size; program_cnt++){
+      000203 7E 00            [12]  356 	mov	r6,#0x00
+      000205 7F 00            [12]  357 	mov	r7,#0x00
+      000207                        358 00105$:
+      000207 90 06 34         [24]  359 	mov	dptr,#_hex_size
+      00020A E4               [12]  360 	clr	a
+      00020B 93               [24]  361 	movc	a,@a+dptr
+      00020C FC               [12]  362 	mov	r4,a
+      00020D 74 01            [12]  363 	mov	a,#0x01
+      00020F 93               [24]  364 	movc	a,@a+dptr
+      000210 FD               [12]  365 	mov	r5,a
+      000211 C3               [12]  366 	clr	c
+      000212 EE               [12]  367 	mov	a,r6
+      000213 9C               [12]  368 	subb	a,r4
+      000214 EF               [12]  369 	mov	a,r7
+      000215 9D               [12]  370 	subb	a,r5
+      000216 50 31            [24]  371 	jnc	00103$
+                                    372 ;	./src/program.c:39: AT89S51_Write_Byte(program_cnt + 0x0030, hex_file[program_cnt]);
+      000218 74 30            [12]  373 	mov	a,#0x30
+      00021A 2E               [12]  374 	add	a,r6
+      00021B FC               [12]  375 	mov	r4,a
+      00021C E4               [12]  376 	clr	a
+      00021D 3F               [12]  377 	addc	a,r7
+      00021E FD               [12]  378 	mov	r5,a
+      00021F EE               [12]  379 	mov	a,r6
+      000220 24 D9            [12]  380 	add	a,#_hex_file
+      000222 F5 82            [12]  381 	mov	dpl,a
+      000224 EF               [12]  382 	mov	a,r7
+      000225 34 05            [12]  383 	addc	a,#(_hex_file >> 8)
+      000227 F5 83            [12]  384 	mov	dph,a
+      000229 E4               [12]  385 	clr	a
+      00022A 93               [24]  386 	movc	a,@a+dptr
+      00022B F5 0C            [12]  387 	mov	_AT89S51_Write_Byte_PARM_2,a
+      00022D 8C 82            [24]  388 	mov	dpl,r4
+      00022F 8D 83            [24]  389 	mov	dph,r5
+      000231 C0 07            [24]  390 	push	ar7
+      000233 C0 06            [24]  391 	push	ar6
+      000235 12 04 77         [24]  392 	lcall	_AT89S51_Write_Byte
+                                    393 ;	./src/program.c:40: delay_ms(1);
+      000238 90 00 01         [24]  394 	mov	dptr,#0x0001
+      00023B 12 04 0D         [24]  395 	lcall	_delay_ms
+      00023E D0 06            [24]  396 	pop	ar6
+      000240 D0 07            [24]  397 	pop	ar7
+                                    398 ;	./src/program.c:38: for (program_cnt = 0; program_cnt < hex_size; program_cnt++){
+      000242 0E               [12]  399 	inc	r6
+      000243 BE 00 C1         [24]  400 	cjne	r6,#0x00,00105$
+      000246 0F               [12]  401 	inc	r7
+      000247 80 BE            [24]  402 	sjmp	00105$
+      000249                        403 00103$:
+                                    404 ;	./src/program.c:45: AT8051_RST = 0;
+                                    405 ;	assignBit
+      000249 C2 83            [12]  406 	clr	_P0_3
+                                    407 ;	./src/program.c:46: delay_ms(100);
+      00024B 90 00 64         [24]  408 	mov	dptr,#0x0064
+      00024E 12 04 0D         [24]  409 	lcall	_delay_ms
+                                    410 ;	./src/program.c:47: AT8051_MOSI = 1;
+                                    411 ;	assignBit
+      000251 D2 80            [12]  412 	setb	_P0_0
+                                    413 ;	./src/program.c:48: AT8051_SCK = 1;
+                                    414 ;	assignBit
+      000253 D2 82            [12]  415 	setb	_P0_2
+                                    416 ;	./src/program.c:49: delay_ms(1000);
+      000255 90 03 E8         [24]  417 	mov	dptr,#0x03e8
+      000258 12 04 0D         [24]  418 	lcall	_delay_ms
+                                    419 ;	./src/program.c:51: return HAL_OK;
+      00025B 75 82 00         [24]  420 	mov	dpl,#0x00
+                                    421 ;	./src/program.c:52: }
+      00025E 22               [24]  422 	ret
+                                    423 ;------------------------------------------------------------
+                                    424 ;Allocation info for local variables in function 'AT89S51_Program_read'
+                                    425 ;------------------------------------------------------------
+                                    426 ;spr_r_buf                 Allocated to registers r5 
+                                    427 ;program_cnt               Allocated to registers r6 r7 
+                                    428 ;------------------------------------------------------------
+                                    429 ;	./src/program.c:54: unsigned char AT89S51_Program_read(void)
+                                    430 ;	-----------------------------------------
+                                    431 ;	 function AT89S51_Program_read
+                                    432 ;	-----------------------------------------
+      00025F                        433 _AT89S51_Program_read:
+                                    434 ;	./src/program.c:60: AT8051_MOSI = 0;
+                                    435 ;	assignBit
+      00025F C2 80            [12]  436 	clr	_P0_0
+                                    437 ;	./src/program.c:61: AT8051_SCK = 0;
+                                    438 ;	assignBit
+      000261 C2 82            [12]  439 	clr	_P0_2
+                                    440 ;	./src/program.c:62: delay_ms(1);
+      000263 90 00 01         [24]  441 	mov	dptr,#0x0001
+      000266 12 04 0D         [24]  442 	lcall	_delay_ms
+                                    443 ;	./src/program.c:63: AT8051_RST = 1;
+                                    444 ;	assignBit
+      000269 D2 83            [12]  445 	setb	_P0_3
+                                    446 ;	./src/program.c:64: delay_ms(10);
+      00026B 90 00 0A         [24]  447 	mov	dptr,#0x000a
+      00026E 12 04 0D         [24]  448 	lcall	_delay_ms
+                                    449 ;	./src/program.c:67: spr_r_buf = AT89S51_Prog_En();
+      000271 12 04 CD         [24]  450 	lcall	_AT89S51_Prog_En
+      000274 AF 82            [24]  451 	mov	r7,dpl
+                                    452 ;	./src/program.c:68: if (spr_r_buf != 0x69) {
+      000276 BF 69 02         [24]  453 	cjne	r7,#0x69,00131$
+      000279 80 16            [24]  454 	sjmp	00114$
+      00027B                        455 00131$:
+                                    456 ;	./src/program.c:69: AT8051_RST = 0;
+                                    457 ;	assignBit
+      00027B C2 83            [12]  458 	clr	_P0_3
+                                    459 ;	./src/program.c:70: delay_ms(100);	
+      00027D 90 00 64         [24]  460 	mov	dptr,#0x0064
+      000280 12 04 0D         [24]  461 	lcall	_delay_ms
+                                    462 ;	./src/program.c:71: AT8051_MOSI = 1;
+                                    463 ;	assignBit
+      000283 D2 80            [12]  464 	setb	_P0_0
+                                    465 ;	./src/program.c:72: AT8051_SCK = 1;
+                                    466 ;	assignBit
+      000285 D2 82            [12]  467 	setb	_P0_2
+                                    468 ;	./src/program.c:73: delay_ms(1000);	
+      000287 90 03 E8         [24]  469 	mov	dptr,#0x03e8
+      00028A 12 04 0D         [24]  470 	lcall	_delay_ms
+                                    471 ;	./src/program.c:74: return HAL_Prog_En_ERROR;
+      00028D 75 82 01         [24]  472 	mov	dpl,#0x01
+      000290 22               [24]  473 	ret
+                                    474 ;	./src/program.c:80: for (program_cnt = 0; program_cnt < hex_size; program_cnt++){
+      000291                        475 00114$:
+      000291 7E 00            [12]  476 	mov	r6,#0x00
+      000293 7F 00            [12]  477 	mov	r7,#0x00
+      000295                        478 00107$:
+      000295 90 06 34         [24]  479 	mov	dptr,#_hex_size
+      000298 E4               [12]  480 	clr	a
+      000299 93               [24]  481 	movc	a,@a+dptr
+      00029A FC               [12]  482 	mov	r4,a
+      00029B 74 01            [12]  483 	mov	a,#0x01
+      00029D 93               [24]  484 	movc	a,@a+dptr
+      00029E FD               [12]  485 	mov	r5,a
+      00029F C3               [12]  486 	clr	c
+      0002A0 EE               [12]  487 	mov	a,r6
+      0002A1 9C               [12]  488 	subb	a,r4
+      0002A2 EF               [12]  489 	mov	a,r7
+      0002A3 9D               [12]  490 	subb	a,r5
+      0002A4 50 50            [24]  491 	jnc	00105$
+                                    492 ;	./src/program.c:81: spr_r_buf = AT89S51_Read_Byte(program_cnt + 0x0030);
+      0002A6 74 30            [12]  493 	mov	a,#0x30
+      0002A8 2E               [12]  494 	add	a,r6
+      0002A9 F5 82            [12]  495 	mov	dpl,a
+      0002AB E4               [12]  496 	clr	a
+      0002AC 3F               [12]  497 	addc	a,r7
+      0002AD F5 83            [12]  498 	mov	dph,a
+      0002AF C0 07            [24]  499 	push	ar7
+      0002B1 C0 06            [24]  500 	push	ar6
+      0002B3 12 04 38         [24]  501 	lcall	_AT89S51_Read_Byte
+      0002B6 AD 82            [24]  502 	mov	r5,dpl
+                                    503 ;	./src/program.c:82: delay_ms(1);
+      0002B8 90 00 01         [24]  504 	mov	dptr,#0x0001
+      0002BB C0 05            [24]  505 	push	ar5
+      0002BD 12 04 0D         [24]  506 	lcall	_delay_ms
+      0002C0 D0 05            [24]  507 	pop	ar5
+      0002C2 D0 06            [24]  508 	pop	ar6
+      0002C4 D0 07            [24]  509 	pop	ar7
+                                    510 ;	./src/program.c:85: if(spr_r_buf != hex_file[program_cnt])
+      0002C6 EE               [12]  511 	mov	a,r6
+      0002C7 24 D9            [12]  512 	add	a,#_hex_file
+      0002C9 F5 82            [12]  513 	mov	dpl,a
+      0002CB EF               [12]  514 	mov	a,r7
+      0002CC 34 05            [12]  515 	addc	a,#(_hex_file >> 8)
+      0002CE F5 83            [12]  516 	mov	dph,a
+      0002D0 E4               [12]  517 	clr	a
+      0002D1 93               [24]  518 	movc	a,@a+dptr
+      0002D2 FC               [12]  519 	mov	r4,a
+      0002D3 ED               [12]  520 	mov	a,r5
+      0002D4 B5 04 02         [24]  521 	cjne	a,ar4,00133$
+      0002D7 80 16            [24]  522 	sjmp	00108$
+      0002D9                        523 00133$:
+                                    524 ;	./src/program.c:87: AT8051_RST = 0;
+                                    525 ;	assignBit
+      0002D9 C2 83            [12]  526 	clr	_P0_3
+                                    527 ;	./src/program.c:88: delay_ms(100);
+      0002DB 90 00 64         [24]  528 	mov	dptr,#0x0064
+      0002DE 12 04 0D         [24]  529 	lcall	_delay_ms
+                                    530 ;	./src/program.c:89: AT8051_MOSI = 1;
+                                    531 ;	assignBit
+      0002E1 D2 80            [12]  532 	setb	_P0_0
+                                    533 ;	./src/program.c:90: AT8051_SCK = 1;
+                                    534 ;	assignBit
+      0002E3 D2 82            [12]  535 	setb	_P0_2
+                                    536 ;	./src/program.c:91: delay_ms(1000);
+      0002E5 90 03 E8         [24]  537 	mov	dptr,#0x03e8
+      0002E8 12 04 0D         [24]  538 	lcall	_delay_ms
+                                    539 ;	./src/program.c:93: return HAL_Verify_ERROR;
+      0002EB 75 82 02         [24]  540 	mov	dpl,#0x02
+      0002EE 22               [24]  541 	ret
+      0002EF                        542 00108$:
+                                    543 ;	./src/program.c:80: for (program_cnt = 0; program_cnt < hex_size; program_cnt++){
+      0002EF 0E               [12]  544 	inc	r6
+      0002F0 BE 00 A2         [24]  545 	cjne	r6,#0x00,00107$
+      0002F3 0F               [12]  546 	inc	r7
+      0002F4 80 9F            [24]  547 	sjmp	00107$
+      0002F6                        548 00105$:
+                                    549 ;	./src/program.c:99: AT8051_RST = 0;
+                                    550 ;	assignBit
+      0002F6 C2 83            [12]  551 	clr	_P0_3
+                                    552 ;	./src/program.c:100: delay_ms(100);
+      0002F8 90 00 64         [24]  553 	mov	dptr,#0x0064
+      0002FB 12 04 0D         [24]  554 	lcall	_delay_ms
+                                    555 ;	./src/program.c:101: AT8051_MOSI = 1;
+                                    556 ;	assignBit
+      0002FE D2 80            [12]  557 	setb	_P0_0
+                                    558 ;	./src/program.c:102: AT8051_SCK = 1;
+                                    559 ;	assignBit
+      000300 D2 82            [12]  560 	setb	_P0_2
+                                    561 ;	./src/program.c:103: delay_ms(1000);
+      000302 90 03 E8         [24]  562 	mov	dptr,#0x03e8
+      000305 12 04 0D         [24]  563 	lcall	_delay_ms
+                                    564 ;	./src/program.c:105: return HAL_OK;
+      000308 75 82 00         [24]  565 	mov	dpl,#0x00
+                                    566 ;	./src/program.c:106: }
+      00030B 22               [24]  567 	ret
+                                    568 ;------------------------------------------------------------
+                                    569 ;Allocation info for local variables in function 'AT89S51_Program_erase'
+                                    570 ;------------------------------------------------------------
+                                    571 ;spr_r_buf                 Allocated to registers r7 
+                                    572 ;program_cnt               Allocated to registers 
+                                    573 ;------------------------------------------------------------
+                                    574 ;	./src/program.c:108: unsigned char AT89S51_Program_erase(void)
+                                    575 ;	-----------------------------------------
+                                    576 ;	 function AT89S51_Program_erase
+                                    577 ;	-----------------------------------------
+      00030C                        578 _AT89S51_Program_erase:
+                                    579 ;	./src/program.c:114: AT8051_MOSI = 0;
+                                    580 ;	assignBit
+      00030C C2 80            [12]  581 	clr	_P0_0
+                                    582 ;	./src/program.c:115: AT8051_SCK = 0;
+                                    583 ;	assignBit
+      00030E C2 82            [12]  584 	clr	_P0_2
+                                    585 ;	./src/program.c:116: delay_ms(1);
+      000310 90 00 01         [24]  586 	mov	dptr,#0x0001
+      000313 12 04 0D         [24]  587 	lcall	_delay_ms
+                                    588 ;	./src/program.c:117: AT8051_RST = 1;
+                                    589 ;	assignBit
+      000316 D2 83            [12]  590 	setb	_P0_3
+                                    591 ;	./src/program.c:118: delay_ms(10);
+      000318 90 00 0A         [24]  592 	mov	dptr,#0x000a
+      00031B 12 04 0D         [24]  593 	lcall	_delay_ms
+                                    594 ;	./src/program.c:121: spr_r_buf = AT89S51_Prog_En();
+      00031E 12 04 CD         [24]  595 	lcall	_AT89S51_Prog_En
+      000321 AF 82            [24]  596 	mov	r7,dpl
+                                    597 ;	./src/program.c:122: if(spr_r_buf != 0x69)
+      000323 BF 69 02         [24]  598 	cjne	r7,#0x69,00109$
+      000326 80 16            [24]  599 	sjmp	00102$
+      000328                        600 00109$:
+                                    601 ;	./src/program.c:124: AT8051_RST = 0;
+                                    602 ;	assignBit
+      000328 C2 83            [12]  603 	clr	_P0_3
+                                    604 ;	./src/program.c:125: delay_ms(100);
+      00032A 90 00 64         [24]  605 	mov	dptr,#0x0064
+      00032D 12 04 0D         [24]  606 	lcall	_delay_ms
+                                    607 ;	./src/program.c:126: AT8051_MOSI = 1;
+                                    608 ;	assignBit
+      000330 D2 80            [12]  609 	setb	_P0_0
+                                    610 ;	./src/program.c:127: AT8051_SCK = 1;
+                                    611 ;	assignBit
+      000332 D2 82            [12]  612 	setb	_P0_2
+                                    613 ;	./src/program.c:128: delay_ms(1000);
+      000334 90 03 E8         [24]  614 	mov	dptr,#0x03e8
+      000337 12 04 0D         [24]  615 	lcall	_delay_ms
+                                    616 ;	./src/program.c:130: return HAL_Prog_En_ERROR;
+      00033A 75 82 01         [24]  617 	mov	dpl,#0x01
+      00033D 22               [24]  618 	ret
+      00033E                        619 00102$:
+                                    620 ;	./src/program.c:134: AT89S51_Chip_Erase();
+      00033E 12 04 FA         [24]  621 	lcall	_AT89S51_Chip_Erase
+                                    622 ;	./src/program.c:135: delay_ms(1000);
+      000341 90 03 E8         [24]  623 	mov	dptr,#0x03e8
+      000344 12 04 0D         [24]  624 	lcall	_delay_ms
+                                    625 ;	./src/program.c:138: AT8051_RST = 0;
+                                    626 ;	assignBit
+      000347 C2 83            [12]  627 	clr	_P0_3
+                                    628 ;	./src/program.c:139: delay_ms(100);
+      000349 90 00 64         [24]  629 	mov	dptr,#0x0064
+      00034C 12 04 0D         [24]  630 	lcall	_delay_ms
+                                    631 ;	./src/program.c:140: AT8051_MOSI = 1;
+                                    632 ;	assignBit
+      00034F D2 80            [12]  633 	setb	_P0_0
+                                    634 ;	./src/program.c:141: AT8051_SCK = 1;
+                                    635 ;	assignBit
+      000351 D2 82            [12]  636 	setb	_P0_2
+                                    637 ;	./src/program.c:142: delay_ms(1000);
+      000353 90 03 E8         [24]  638 	mov	dptr,#0x03e8
+      000356 12 04 0D         [24]  639 	lcall	_delay_ms
+                                    640 ;	./src/program.c:144: return HAL_OK;
+      000359 75 82 00         [24]  641 	mov	dpl,#0x00
+                                    642 ;	./src/program.c:145: }
+      00035C 22               [24]  643 	ret
+                                    644 	.area CSEG    (CODE)
+                                    645 	.area CONST   (CODE)
+      0005D9                        646 _hex_file:
+      0005D9 7C                     647 	.db #0x7c	; 124
+      0005DA 19                     648 	.db #0x19	; 25
+      0005DB 7D                     649 	.db #0x7d	; 125
+      0005DC 19                     650 	.db #0x19	; 25
+      0005DD D2                     651 	.db #0xd2	; 210
+      0005DE B7                     652 	.db #0xb7	; 183
+      0005DF 11                     653 	.db #0x11	; 17
+      0005E0 62                     654 	.db #0x62	; 98	'b'
+      0005E1 C2                     655 	.db #0xc2	; 194
+      0005E2 B7                     656 	.db #0xb7	; 183
+      0005E3 11                     657 	.db #0x11	; 17
+      0005E4 62                     658 	.db #0x62	; 98	'b'
+      0005E5 DD                     659 	.db #0xdd	; 221
+      0005E6 F6                     660 	.db #0xf6	; 246
+      0005E7 DC                     661 	.db #0xdc	; 220
+      0005E8 F2                     662 	.db #0xf2	; 242
+      0005E9 7C                     663 	.db #0x7c	; 124
+      0005EA 19                     664 	.db #0x19	; 25
+      0005EB 7D                     665 	.db #0x7d	; 125
+      0005EC 19                     666 	.db #0x19	; 25
+      0005ED D2                     667 	.db #0xd2	; 210
+      0005EE B7                     668 	.db #0xb7	; 183
+      0005EF 11                     669 	.db #0x11	; 17
+      0005F0 6F                     670 	.db #0x6f	; 111	'o'
+      0005F1 C2                     671 	.db #0xc2	; 194
+      0005F2 B7                     672 	.db #0xb7	; 183
+      0005F3 11                     673 	.db #0x11	; 17
+      0005F4 6F                     674 	.db #0x6f	; 111	'o'
+      0005F5 DD                     675 	.db #0xdd	; 221
+      0005F6 F6                     676 	.db #0xf6	; 246
+      0005F7 DC                     677 	.db #0xdc	; 220
+      0005F8 F2                     678 	.db #0xf2	; 242
+      0005F9 7C                     679 	.db #0x7c	; 124
+      0005FA 19                     680 	.db #0x19	; 25
+      0005FB 7D                     681 	.db #0x7d	; 125
+      0005FC 19                     682 	.db #0x19	; 25
+      0005FD D2                     683 	.db #0xd2	; 210
+      0005FE B7                     684 	.db #0xb7	; 183
+      0005FF 11                     685 	.db #0x11	; 17
+      000600 7C                     686 	.db #0x7c	; 124
+      000601 C2                     687 	.db #0xc2	; 194
+      000602 B7                     688 	.db #0xb7	; 183
+      000603 11                     689 	.db #0x11	; 17
+      000604 7C                     690 	.db #0x7c	; 124
+      000605 DD                     691 	.db #0xdd	; 221
+      000606 F6                     692 	.db #0xf6	; 246
+      000607 DC                     693 	.db #0xdc	; 220
+      000608 F2                     694 	.db #0xf2	; 242
+      000609 80                     695 	.db #0x80	; 128
+      00060A 27                     696 	.db #0x27	; 39
+      00060B 7E                     697 	.db #0x7e	; 126
+      00060C 0A                     698 	.db #0x0a	; 10
+      00060D 7F                     699 	.db #0x7f	; 127
+      00060E 13                     700 	.db #0x13	; 19
+      00060F DF                     701 	.db #0xdf	; 223
+      000610 FE                     702 	.db #0xfe	; 254
+      000611 DE                     703 	.db #0xde	; 222
+      000612 FA                     704 	.db #0xfa	; 250
+      000613 7F                     705 	.db #0x7f	; 127
+      000614 0D                     706 	.db #0x0d	; 13
+      000615 DF                     707 	.db #0xdf	; 223
+      000616 FE                     708 	.db #0xfe	; 254
+      000617 22                     709 	.db #0x22	; 34
+      000618 7E                     710 	.db #0x7e	; 126
+      000619 0A                     711 	.db #0x0a	; 10
+      00061A 7F                     712 	.db #0x7f	; 127
+      00061B 11                     713 	.db #0x11	; 17
+      00061C DF                     714 	.db #0xdf	; 223
+      00061D FE                     715 	.db #0xfe	; 254
+      00061E DE                     716 	.db #0xde	; 222
+      00061F FA                     717 	.db #0xfa	; 250
+      000620 7F                     718 	.db #0x7f	; 127
+      000621 09                     719 	.db #0x09	; 9
+      000622 DF                     720 	.db #0xdf	; 223
+      000623 FE                     721 	.db #0xfe	; 254
+      000624 22                     722 	.db #0x22	; 34
+      000625 7E                     723 	.db #0x7e	; 126
+      000626 0A                     724 	.db #0x0a	; 10
+      000627 7F                     725 	.db #0x7f	; 127
+      000628 0F                     726 	.db #0x0f	; 15
+      000629 DF                     727 	.db #0xdf	; 223
+      00062A FE                     728 	.db #0xfe	; 254
+      00062B DE                     729 	.db #0xde	; 222
+      00062C FA                     730 	.db #0xfa	; 250
+      00062D 7F                     731 	.db #0x7f	; 127
+      00062E 07                     732 	.db #0x07	; 7
+      00062F DF                     733 	.db #0xdf	; 223
+      000630 FE                     734 	.db #0xfe	; 254
+      000631 22                     735 	.db #0x22	; 34
+      000632 80                     736 	.db #0x80	; 128
+      000633 FE                     737 	.db #0xfe	; 254
+      000634                        738 _hex_size:
+      000634 5B 00                  739 	.byte #0x5b, #0x00	; 91
+                                    740 	.area XINIT   (CODE)
+                                    741 	.area CABS    (ABS,CODE)

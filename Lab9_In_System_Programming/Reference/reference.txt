@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Intel_HEX
+
+https://www.electronicwings.com/8051/8051-interrupts
