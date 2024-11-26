@@ -1,0 +1,581 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 4.1.0 #12072 (MINGW64)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module chip
+                                      6 	.optsdcc -mmcs51 --model-small
+                                      7 	
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _delay_10us
+                                     12 	.globl _CY
+                                     13 	.globl _AC
+                                     14 	.globl _F0
+                                     15 	.globl _RS1
+                                     16 	.globl _RS0
+                                     17 	.globl _OV
+                                     18 	.globl _F1
+                                     19 	.globl _P
+                                     20 	.globl _PS
+                                     21 	.globl _PT1
+                                     22 	.globl _PX1
+                                     23 	.globl _PT0
+                                     24 	.globl _PX0
+                                     25 	.globl _RD
+                                     26 	.globl _WR
+                                     27 	.globl _T1
+                                     28 	.globl _T0
+                                     29 	.globl _INT1
+                                     30 	.globl _INT0
+                                     31 	.globl _TXD
+                                     32 	.globl _RXD
+                                     33 	.globl _P3_7
+                                     34 	.globl _P3_6
+                                     35 	.globl _P3_5
+                                     36 	.globl _P3_4
+                                     37 	.globl _P3_3
+                                     38 	.globl _P3_2
+                                     39 	.globl _P3_1
+                                     40 	.globl _P3_0
+                                     41 	.globl _EA
+                                     42 	.globl _ES
+                                     43 	.globl _ET1
+                                     44 	.globl _EX1
+                                     45 	.globl _ET0
+                                     46 	.globl _EX0
+                                     47 	.globl _P2_7
+                                     48 	.globl _P2_6
+                                     49 	.globl _P2_5
+                                     50 	.globl _P2_4
+                                     51 	.globl _P2_3
+                                     52 	.globl _P2_2
+                                     53 	.globl _P2_1
+                                     54 	.globl _P2_0
+                                     55 	.globl _SM0
+                                     56 	.globl _SM1
+                                     57 	.globl _SM2
+                                     58 	.globl _REN
+                                     59 	.globl _TB8
+                                     60 	.globl _RB8
+                                     61 	.globl _TI
+                                     62 	.globl _RI
+                                     63 	.globl _P1_7
+                                     64 	.globl _P1_6
+                                     65 	.globl _P1_5
+                                     66 	.globl _P1_4
+                                     67 	.globl _P1_3
+                                     68 	.globl _P1_2
+                                     69 	.globl _P1_1
+                                     70 	.globl _P1_0
+                                     71 	.globl _TF1
+                                     72 	.globl _TR1
+                                     73 	.globl _TF0
+                                     74 	.globl _TR0
+                                     75 	.globl _IE1
+                                     76 	.globl _IT1
+                                     77 	.globl _IE0
+                                     78 	.globl _IT0
+                                     79 	.globl _P0_7
+                                     80 	.globl _P0_6
+                                     81 	.globl _P0_5
+                                     82 	.globl _P0_4
+                                     83 	.globl _P0_3
+                                     84 	.globl _P0_2
+                                     85 	.globl _P0_1
+                                     86 	.globl _P0_0
+                                     87 	.globl _B
+                                     88 	.globl _ACC
+                                     89 	.globl _PSW
+                                     90 	.globl _IP
+                                     91 	.globl _P3
+                                     92 	.globl _IE
+                                     93 	.globl _P2
+                                     94 	.globl _SBUF
+                                     95 	.globl _SCON
+                                     96 	.globl _P1
+                                     97 	.globl _TH1
+                                     98 	.globl _TH0
+                                     99 	.globl _TL1
+                                    100 	.globl _TL0
+                                    101 	.globl _TMOD
+                                    102 	.globl _TCON
+                                    103 	.globl _PCON
+                                    104 	.globl _DPH
+                                    105 	.globl _DPL
+                                    106 	.globl _SP
+                                    107 	.globl _P0
+                                    108 	.globl _AT89S51_Write_Byte_PARM_2
+                                    109 	.globl _AT89S51_Read_Byte
+                                    110 	.globl _AT89S51_Write_Byte
+                                    111 	.globl _AT89S51_Prog_En
+                                    112 	.globl _AT89S51_Chip_Erase
+                                    113 	.globl _SPI_MASTER_WR
+                                    114 ;--------------------------------------------------------
+                                    115 ; special function registers
+                                    116 ;--------------------------------------------------------
+                                    117 	.area RSEG    (ABS,DATA)
+      000000                        118 	.org 0x0000
+                           000080   119 _P0	=	0x0080
+                           000081   120 _SP	=	0x0081
+                           000082   121 _DPL	=	0x0082
+                           000083   122 _DPH	=	0x0083
+                           000087   123 _PCON	=	0x0087
+                           000088   124 _TCON	=	0x0088
+                           000089   125 _TMOD	=	0x0089
+                           00008A   126 _TL0	=	0x008a
+                           00008B   127 _TL1	=	0x008b
+                           00008C   128 _TH0	=	0x008c
+                           00008D   129 _TH1	=	0x008d
+                           000090   130 _P1	=	0x0090
+                           000098   131 _SCON	=	0x0098
+                           000099   132 _SBUF	=	0x0099
+                           0000A0   133 _P2	=	0x00a0
+                           0000A8   134 _IE	=	0x00a8
+                           0000B0   135 _P3	=	0x00b0
+                           0000B8   136 _IP	=	0x00b8
+                           0000D0   137 _PSW	=	0x00d0
+                           0000E0   138 _ACC	=	0x00e0
+                           0000F0   139 _B	=	0x00f0
+                                    140 ;--------------------------------------------------------
+                                    141 ; special function bits
+                                    142 ;--------------------------------------------------------
+                                    143 	.area RSEG    (ABS,DATA)
+      000000                        144 	.org 0x0000
+                           000080   145 _P0_0	=	0x0080
+                           000081   146 _P0_1	=	0x0081
+                           000082   147 _P0_2	=	0x0082
+                           000083   148 _P0_3	=	0x0083
+                           000084   149 _P0_4	=	0x0084
+                           000085   150 _P0_5	=	0x0085
+                           000086   151 _P0_6	=	0x0086
+                           000087   152 _P0_7	=	0x0087
+                           000088   153 _IT0	=	0x0088
+                           000089   154 _IE0	=	0x0089
+                           00008A   155 _IT1	=	0x008a
+                           00008B   156 _IE1	=	0x008b
+                           00008C   157 _TR0	=	0x008c
+                           00008D   158 _TF0	=	0x008d
+                           00008E   159 _TR1	=	0x008e
+                           00008F   160 _TF1	=	0x008f
+                           000090   161 _P1_0	=	0x0090
+                           000091   162 _P1_1	=	0x0091
+                           000092   163 _P1_2	=	0x0092
+                           000093   164 _P1_3	=	0x0093
+                           000094   165 _P1_4	=	0x0094
+                           000095   166 _P1_5	=	0x0095
+                           000096   167 _P1_6	=	0x0096
+                           000097   168 _P1_7	=	0x0097
+                           000098   169 _RI	=	0x0098
+                           000099   170 _TI	=	0x0099
+                           00009A   171 _RB8	=	0x009a
+                           00009B   172 _TB8	=	0x009b
+                           00009C   173 _REN	=	0x009c
+                           00009D   174 _SM2	=	0x009d
+                           00009E   175 _SM1	=	0x009e
+                           00009F   176 _SM0	=	0x009f
+                           0000A0   177 _P2_0	=	0x00a0
+                           0000A1   178 _P2_1	=	0x00a1
+                           0000A2   179 _P2_2	=	0x00a2
+                           0000A3   180 _P2_3	=	0x00a3
+                           0000A4   181 _P2_4	=	0x00a4
+                           0000A5   182 _P2_5	=	0x00a5
+                           0000A6   183 _P2_6	=	0x00a6
+                           0000A7   184 _P2_7	=	0x00a7
+                           0000A8   185 _EX0	=	0x00a8
+                           0000A9   186 _ET0	=	0x00a9
+                           0000AA   187 _EX1	=	0x00aa
+                           0000AB   188 _ET1	=	0x00ab
+                           0000AC   189 _ES	=	0x00ac
+                           0000AF   190 _EA	=	0x00af
+                           0000B0   191 _P3_0	=	0x00b0
+                           0000B1   192 _P3_1	=	0x00b1
+                           0000B2   193 _P3_2	=	0x00b2
+                           0000B3   194 _P3_3	=	0x00b3
+                           0000B4   195 _P3_4	=	0x00b4
+                           0000B5   196 _P3_5	=	0x00b5
+                           0000B6   197 _P3_6	=	0x00b6
+                           0000B7   198 _P3_7	=	0x00b7
+                           0000B0   199 _RXD	=	0x00b0
+                           0000B1   200 _TXD	=	0x00b1
+                           0000B2   201 _INT0	=	0x00b2
+                           0000B3   202 _INT1	=	0x00b3
+                           0000B4   203 _T0	=	0x00b4
+                           0000B5   204 _T1	=	0x00b5
+                           0000B6   205 _WR	=	0x00b6
+                           0000B7   206 _RD	=	0x00b7
+                           0000B8   207 _PX0	=	0x00b8
+                           0000B9   208 _PT0	=	0x00b9
+                           0000BA   209 _PX1	=	0x00ba
+                           0000BB   210 _PT1	=	0x00bb
+                           0000BC   211 _PS	=	0x00bc
+                           0000D0   212 _P	=	0x00d0
+                           0000D1   213 _F1	=	0x00d1
+                           0000D2   214 _OV	=	0x00d2
+                           0000D3   215 _RS0	=	0x00d3
+                           0000D4   216 _RS1	=	0x00d4
+                           0000D5   217 _F0	=	0x00d5
+                           0000D6   218 _AC	=	0x00d6
+                           0000D7   219 _CY	=	0x00d7
+                                    220 ;--------------------------------------------------------
+                                    221 ; overlayable register banks
+                                    222 ;--------------------------------------------------------
+                                    223 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        224 	.ds 8
+                                    225 ;--------------------------------------------------------
+                                    226 ; internal ram data
+                                    227 ;--------------------------------------------------------
+                                    228 	.area DSEG    (DATA)
+      00000C                        229 _AT89S51_Write_Byte_PARM_2:
+      00000C                        230 	.ds 1
+                                    231 ;--------------------------------------------------------
+                                    232 ; overlayable items in internal ram 
+                                    233 ;--------------------------------------------------------
+                                    234 ;--------------------------------------------------------
+                                    235 ; indirectly addressable internal ram data
+                                    236 ;--------------------------------------------------------
+                                    237 	.area ISEG    (DATA)
+                                    238 ;--------------------------------------------------------
+                                    239 ; absolute internal ram data
+                                    240 ;--------------------------------------------------------
+                                    241 	.area IABS    (ABS,DATA)
+                                    242 	.area IABS    (ABS,DATA)
+                                    243 ;--------------------------------------------------------
+                                    244 ; bit data
+                                    245 ;--------------------------------------------------------
+                                    246 	.area BSEG    (BIT)
+                                    247 ;--------------------------------------------------------
+                                    248 ; paged external ram data
+                                    249 ;--------------------------------------------------------
+                                    250 	.area PSEG    (PAG,XDATA)
+                                    251 ;--------------------------------------------------------
+                                    252 ; external ram data
+                                    253 ;--------------------------------------------------------
+                                    254 	.area XSEG    (XDATA)
+                                    255 ;--------------------------------------------------------
+                                    256 ; absolute external ram data
+                                    257 ;--------------------------------------------------------
+                                    258 	.area XABS    (ABS,XDATA)
+                                    259 ;--------------------------------------------------------
+                                    260 ; external initialized ram data
+                                    261 ;--------------------------------------------------------
+                                    262 	.area XISEG   (XDATA)
+                                    263 	.area HOME    (CODE)
+                                    264 	.area GSINIT0 (CODE)
+                                    265 	.area GSINIT1 (CODE)
+                                    266 	.area GSINIT2 (CODE)
+                                    267 	.area GSINIT3 (CODE)
+                                    268 	.area GSINIT4 (CODE)
+                                    269 	.area GSINIT5 (CODE)
+                                    270 	.area GSINIT  (CODE)
+                                    271 	.area GSFINAL (CODE)
+                                    272 	.area CSEG    (CODE)
+                                    273 ;--------------------------------------------------------
+                                    274 ; global & static initialisations
+                                    275 ;--------------------------------------------------------
+                                    276 	.area HOME    (CODE)
+                                    277 	.area GSINIT  (CODE)
+                                    278 	.area GSFINAL (CODE)
+                                    279 	.area GSINIT  (CODE)
+                                    280 ;--------------------------------------------------------
+                                    281 ; Home
+                                    282 ;--------------------------------------------------------
+                                    283 	.area HOME    (CODE)
+                                    284 	.area HOME    (CODE)
+                                    285 ;--------------------------------------------------------
+                                    286 ; code
+                                    287 ;--------------------------------------------------------
+                                    288 	.area CSEG    (CODE)
+                                    289 ;------------------------------------------------------------
+                                    290 ;Allocation info for local variables in function 'AT89S51_Read_Byte'
+                                    291 ;------------------------------------------------------------
+                                    292 ;address                   Allocated to registers r6 r7 
+                                    293 ;spi_r_buf                 Allocated to registers r7 
+                                    294 ;------------------------------------------------------------
+                                    295 ;	./src/chip.c:5: unsigned char AT89S51_Read_Byte(unsigned int address)
+                                    296 ;	-----------------------------------------
+                                    297 ;	 function AT89S51_Read_Byte
+                                    298 ;	-----------------------------------------
+      000438                        299 _AT89S51_Read_Byte:
+                           000007   300 	ar7 = 0x07
+                           000006   301 	ar6 = 0x06
+                           000005   302 	ar5 = 0x05
+                           000004   303 	ar4 = 0x04
+                           000003   304 	ar3 = 0x03
+                           000002   305 	ar2 = 0x02
+                           000001   306 	ar1 = 0x01
+                           000000   307 	ar0 = 0x00
+      000438 AE 82            [24]  308 	mov	r6,dpl
+      00043A AF 83            [24]  309 	mov	r7,dph
+                                    310 ;	./src/chip.c:9: SPI_MASTER_WR(0x20);				// read mode
+      00043C 75 82 20         [24]  311 	mov	dpl,#0x20
+      00043F C0 07            [24]  312 	push	ar7
+      000441 C0 06            [24]  313 	push	ar6
+      000443 12 05 27         [24]  314 	lcall	_SPI_MASTER_WR
+                                    315 ;	./src/chip.c:10: delay_10us();
+      000446 12 04 08         [24]  316 	lcall	_delay_10us
+      000449 D0 06            [24]  317 	pop	ar6
+      00044B D0 07            [24]  318 	pop	ar7
+                                    319 ;	./src/chip.c:11: SPI_MASTER_WR(address >> 8);		// A[11:8]
+      00044D 8F 82            [24]  320 	mov	dpl,r7
+      00044F C0 07            [24]  321 	push	ar7
+      000451 C0 06            [24]  322 	push	ar6
+      000453 12 05 27         [24]  323 	lcall	_SPI_MASTER_WR
+                                    324 ;	./src/chip.c:12: delay_10us();
+      000456 12 04 08         [24]  325 	lcall	_delay_10us
+      000459 D0 06            [24]  326 	pop	ar6
+      00045B D0 07            [24]  327 	pop	ar7
+                                    328 ;	./src/chip.c:13: SPI_MASTER_WR(address & 0x00ff);	// A[7:0]
+      00045D 8E 82            [24]  329 	mov	dpl,r6
+      00045F 12 05 27         [24]  330 	lcall	_SPI_MASTER_WR
+                                    331 ;	./src/chip.c:14: delay_10us();
+      000462 12 04 08         [24]  332 	lcall	_delay_10us
+                                    333 ;	./src/chip.c:15: spi_r_buf = SPI_MASTER_WR(0x00);	// D[7:0]
+      000465 75 82 00         [24]  334 	mov	dpl,#0x00
+      000468 12 05 27         [24]  335 	lcall	_SPI_MASTER_WR
+      00046B AF 82            [24]  336 	mov	r7,dpl
+                                    337 ;	./src/chip.c:16: delay_10us();	
+      00046D C0 07            [24]  338 	push	ar7
+      00046F 12 04 08         [24]  339 	lcall	_delay_10us
+      000472 D0 07            [24]  340 	pop	ar7
+                                    341 ;	./src/chip.c:18: return spi_r_buf;		//return reading data by 89s51
+      000474 8F 82            [24]  342 	mov	dpl,r7
+                                    343 ;	./src/chip.c:19: }
+      000476 22               [24]  344 	ret
+                                    345 ;------------------------------------------------------------
+                                    346 ;Allocation info for local variables in function 'AT89S51_Write_Byte'
+                                    347 ;------------------------------------------------------------
+                                    348 ;package                   Allocated with name '_AT89S51_Write_Byte_PARM_2'
+                                    349 ;address                   Allocated to registers r6 r7 
+                                    350 ;spi_r_buf1                Allocated to registers 
+                                    351 ;spi_r_buf2                Allocated to registers r5 
+                                    352 ;------------------------------------------------------------
+                                    353 ;	./src/chip.c:21: unsigned int AT89S51_Write_Byte(unsigned int address, unsigned char package)
+                                    354 ;	-----------------------------------------
+                                    355 ;	 function AT89S51_Write_Byte
+                                    356 ;	-----------------------------------------
+      000477                        357 _AT89S51_Write_Byte:
+      000477 AE 82            [24]  358 	mov	r6,dpl
+      000479 AF 83            [24]  359 	mov	r7,dph
+                                    360 ;	./src/chip.c:26: SPI_MASTER_WR(0x40);				// write mode
+      00047B 75 82 40         [24]  361 	mov	dpl,#0x40
+      00047E C0 07            [24]  362 	push	ar7
+      000480 C0 06            [24]  363 	push	ar6
+      000482 12 05 27         [24]  364 	lcall	_SPI_MASTER_WR
+                                    365 ;	./src/chip.c:27: delay_10us();
+      000485 12 04 08         [24]  366 	lcall	_delay_10us
+      000488 D0 06            [24]  367 	pop	ar6
+      00048A D0 07            [24]  368 	pop	ar7
+                                    369 ;	./src/chip.c:28: SPI_MASTER_WR(address >> 8);		// A[11:8]
+      00048C 8F 82            [24]  370 	mov	dpl,r7
+      00048E C0 07            [24]  371 	push	ar7
+      000490 C0 06            [24]  372 	push	ar6
+      000492 12 05 27         [24]  373 	lcall	_SPI_MASTER_WR
+                                    374 ;	./src/chip.c:29: delay_10us();
+      000495 12 04 08         [24]  375 	lcall	_delay_10us
+      000498 D0 06            [24]  376 	pop	ar6
+      00049A D0 07            [24]  377 	pop	ar7
+                                    378 ;	./src/chip.c:30: spi_r_buf1 = SPI_MASTER_WR(address & 0x00ff);	// A[7:0]
+      00049C 8E 82            [24]  379 	mov	dpl,r6
+      00049E 12 05 27         [24]  380 	lcall	_SPI_MASTER_WR
+      0004A1 AF 82            [24]  381 	mov	r7,dpl
+      0004A3 7E 00            [12]  382 	mov	r6,#0x00
+                                    383 ;	./src/chip.c:31: delay_10us();
+      0004A5 C0 07            [24]  384 	push	ar7
+      0004A7 C0 06            [24]  385 	push	ar6
+      0004A9 12 04 08         [24]  386 	lcall	_delay_10us
+                                    387 ;	./src/chip.c:32: spi_r_buf2 = SPI_MASTER_WR(package);
+      0004AC 85 0C 82         [24]  388 	mov	dpl,_AT89S51_Write_Byte_PARM_2
+      0004AF 12 05 27         [24]  389 	lcall	_SPI_MASTER_WR
+      0004B2 AD 82            [24]  390 	mov	r5,dpl
+                                    391 ;	./src/chip.c:33: delay_10us();	
+      0004B4 C0 05            [24]  392 	push	ar5
+      0004B6 12 04 08         [24]  393 	lcall	_delay_10us
+      0004B9 D0 05            [24]  394 	pop	ar5
+      0004BB D0 06            [24]  395 	pop	ar6
+      0004BD D0 07            [24]  396 	pop	ar7
+                                    397 ;	./src/chip.c:35: spi_r_buf1 = (spi_r_buf1 << 8) | spi_r_buf2;
+      0004BF 8F 06            [24]  398 	mov	ar6,r7
+      0004C1 E4               [12]  399 	clr	a
+      0004C2 FF               [12]  400 	mov	r7,a
+      0004C3 FC               [12]  401 	mov	r4,a
+      0004C4 ED               [12]  402 	mov	a,r5
+      0004C5 4F               [12]  403 	orl	a,r7
+      0004C6 F5 82            [12]  404 	mov	dpl,a
+      0004C8 EC               [12]  405 	mov	a,r4
+      0004C9 4E               [12]  406 	orl	a,r6
+      0004CA F5 83            [12]  407 	mov	dph,a
+                                    408 ;	./src/chip.c:37: return spi_r_buf1;		//return writing address by 89s51
+                                    409 ;	./src/chip.c:38: }
+      0004CC 22               [24]  410 	ret
+                                    411 ;------------------------------------------------------------
+                                    412 ;Allocation info for local variables in function 'AT89S51_Prog_En'
+                                    413 ;------------------------------------------------------------
+                                    414 ;spi_r_buf                 Allocated to registers r7 
+                                    415 ;------------------------------------------------------------
+                                    416 ;	./src/chip.c:40: unsigned char AT89S51_Prog_En(void)
+                                    417 ;	-----------------------------------------
+                                    418 ;	 function AT89S51_Prog_En
+                                    419 ;	-----------------------------------------
+      0004CD                        420 _AT89S51_Prog_En:
+                                    421 ;	./src/chip.c:44: SPI_MASTER_WR(0xac);
+      0004CD 75 82 AC         [24]  422 	mov	dpl,#0xac
+      0004D0 12 05 27         [24]  423 	lcall	_SPI_MASTER_WR
+                                    424 ;	./src/chip.c:45: delay_10us();
+      0004D3 12 04 08         [24]  425 	lcall	_delay_10us
+                                    426 ;	./src/chip.c:46: SPI_MASTER_WR(0x53);
+      0004D6 75 82 53         [24]  427 	mov	dpl,#0x53
+      0004D9 12 05 27         [24]  428 	lcall	_SPI_MASTER_WR
+                                    429 ;	./src/chip.c:47: delay_10us();
+      0004DC 12 04 08         [24]  430 	lcall	_delay_10us
+                                    431 ;	./src/chip.c:48: SPI_MASTER_WR(0x00);
+      0004DF 75 82 00         [24]  432 	mov	dpl,#0x00
+      0004E2 12 05 27         [24]  433 	lcall	_SPI_MASTER_WR
+                                    434 ;	./src/chip.c:49: delay_10us();
+      0004E5 12 04 08         [24]  435 	lcall	_delay_10us
+                                    436 ;	./src/chip.c:50: spi_r_buf = SPI_MASTER_WR(0x11);
+      0004E8 75 82 11         [24]  437 	mov	dpl,#0x11
+      0004EB 12 05 27         [24]  438 	lcall	_SPI_MASTER_WR
+      0004EE AF 82            [24]  439 	mov	r7,dpl
+                                    440 ;	./src/chip.c:51: delay_10us();	
+      0004F0 C0 07            [24]  441 	push	ar7
+      0004F2 12 04 08         [24]  442 	lcall	_delay_10us
+      0004F5 D0 07            [24]  443 	pop	ar7
+                                    444 ;	./src/chip.c:53: return spi_r_buf;
+      0004F7 8F 82            [24]  445 	mov	dpl,r7
+                                    446 ;	./src/chip.c:54: }
+      0004F9 22               [24]  447 	ret
+                                    448 ;------------------------------------------------------------
+                                    449 ;Allocation info for local variables in function 'AT89S51_Chip_Erase'
+                                    450 ;------------------------------------------------------------
+                                    451 ;spi_r_buf                 Allocated to registers r7 
+                                    452 ;------------------------------------------------------------
+                                    453 ;	./src/chip.c:56: unsigned char AT89S51_Chip_Erase(void)
+                                    454 ;	-----------------------------------------
+                                    455 ;	 function AT89S51_Chip_Erase
+                                    456 ;	-----------------------------------------
+      0004FA                        457 _AT89S51_Chip_Erase:
+                                    458 ;	./src/chip.c:60: SPI_MASTER_WR(0xac);
+      0004FA 75 82 AC         [24]  459 	mov	dpl,#0xac
+      0004FD 12 05 27         [24]  460 	lcall	_SPI_MASTER_WR
+                                    461 ;	./src/chip.c:61: delay_10us();
+      000500 12 04 08         [24]  462 	lcall	_delay_10us
+                                    463 ;	./src/chip.c:62: SPI_MASTER_WR(0x80);
+      000503 75 82 80         [24]  464 	mov	dpl,#0x80
+      000506 12 05 27         [24]  465 	lcall	_SPI_MASTER_WR
+                                    466 ;	./src/chip.c:63: delay_10us();
+      000509 12 04 08         [24]  467 	lcall	_delay_10us
+                                    468 ;	./src/chip.c:64: SPI_MASTER_WR(0x12);
+      00050C 75 82 12         [24]  469 	mov	dpl,#0x12
+      00050F 12 05 27         [24]  470 	lcall	_SPI_MASTER_WR
+                                    471 ;	./src/chip.c:65: delay_10us();
+      000512 12 04 08         [24]  472 	lcall	_delay_10us
+                                    473 ;	./src/chip.c:66: spi_r_buf = SPI_MASTER_WR(0x13);
+      000515 75 82 13         [24]  474 	mov	dpl,#0x13
+      000518 12 05 27         [24]  475 	lcall	_SPI_MASTER_WR
+      00051B AF 82            [24]  476 	mov	r7,dpl
+                                    477 ;	./src/chip.c:67: delay_10us();	
+      00051D C0 07            [24]  478 	push	ar7
+      00051F 12 04 08         [24]  479 	lcall	_delay_10us
+      000522 D0 07            [24]  480 	pop	ar7
+                                    481 ;	./src/chip.c:69: return spi_r_buf;
+      000524 8F 82            [24]  482 	mov	dpl,r7
+                                    483 ;	./src/chip.c:70: }
+      000526 22               [24]  484 	ret
+                                    485 ;------------------------------------------------------------
+                                    486 ;Allocation info for local variables in function 'SPI_MASTER_WR'
+                                    487 ;------------------------------------------------------------
+                                    488 ;package                   Allocated to registers r7 
+                                    489 ;spi_cnt                   Allocated to registers r5 
+                                    490 ;spi_r_buf                 Allocated to registers r4 
+                                    491 ;------------------------------------------------------------
+                                    492 ;	./src/chip.c:73: unsigned char SPI_MASTER_WR(unsigned char package)
+                                    493 ;	-----------------------------------------
+                                    494 ;	 function SPI_MASTER_WR
+                                    495 ;	-----------------------------------------
+      000527                        496 _SPI_MASTER_WR:
+      000527 AF 82            [24]  497 	mov	r7,dpl
+                                    498 ;	./src/chip.c:76: unsigned char spi_r_buf = 0;
+      000529 7E 00            [12]  499 	mov	r6,#0x00
+                                    500 ;	./src/chip.c:78: SPI_SCK = 0;
+                                    501 ;	assignBit
+      00052B C2 82            [12]  502 	clr	_P0_2
+                                    503 ;	./src/chip.c:79: delay_10us();
+      00052D C0 07            [24]  504 	push	ar7
+      00052F C0 06            [24]  505 	push	ar6
+      000531 12 04 08         [24]  506 	lcall	_delay_10us
+      000534 D0 06            [24]  507 	pop	ar6
+      000536 D0 07            [24]  508 	pop	ar7
+                                    509 ;	./src/chip.c:81: for (spi_cnt = 0; spi_cnt < 8; spi_cnt ++) {
+      000538 7D 00            [12]  510 	mov	r5,#0x00
+      00053A                        511 00102$:
+                                    512 ;	./src/chip.c:82: SPI_MOSI = ((package & 0x80) == 0x80) ? 1 : 0;
+      00053A 8F 03            [24]  513 	mov	ar3,r7
+      00053C 53 03 80         [24]  514 	anl	ar3,#0x80
+      00053F E4               [12]  515 	clr	a
+      000540 FC               [12]  516 	mov	r4,a
+      000541 BB 80 04         [24]  517 	cjne	r3,#0x80,00124$
+      000544 BC 00 01         [24]  518 	cjne	r4,#0x00,00124$
+      000547 04               [12]  519 	inc	a
+      000548                        520 00124$:
+                                    521 ;	assignBit
+      000548 24 FF            [12]  522 	add	a,#0xff
+      00054A 92 80            [24]  523 	mov	_P0_0,c
+                                    524 ;	./src/chip.c:84: package <<= 1;
+      00054C 8F 04            [24]  525 	mov	ar4,r7
+      00054E EC               [12]  526 	mov	a,r4
+      00054F 2C               [12]  527 	add	a,r4
+      000550 FF               [12]  528 	mov	r7,a
+                                    529 ;	./src/chip.c:85: delay_10us();
+      000551 C0 07            [24]  530 	push	ar7
+      000553 C0 06            [24]  531 	push	ar6
+      000555 C0 05            [24]  532 	push	ar5
+      000557 12 04 08         [24]  533 	lcall	_delay_10us
+                                    534 ;	./src/chip.c:88: SPI_SCK = 1;
+                                    535 ;	assignBit
+      00055A D2 82            [12]  536 	setb	_P0_2
+                                    537 ;	./src/chip.c:89: delay_10us();
+      00055C 12 04 08         [24]  538 	lcall	_delay_10us
+      00055F D0 05            [24]  539 	pop	ar5
+      000561 D0 06            [24]  540 	pop	ar6
+      000563 D0 07            [24]  541 	pop	ar7
+                                    542 ;	./src/chip.c:91: spi_r_buf <<= 1;
+      000565 8E 04            [24]  543 	mov	ar4,r6
+      000567 EC               [12]  544 	mov	a,r4
+      000568 2C               [12]  545 	add	a,r4
+      000569 FC               [12]  546 	mov	r4,a
+                                    547 ;	./src/chip.c:92: spi_r_buf = (SPI_MISO == 1) ? (spi_r_buf | 0x01) : spi_r_buf;
+      00056A 30 81 09         [24]  548 	jnb	_P0_1,00106$
+      00056D 8C 02            [24]  549 	mov	ar2,r4
+      00056F 7B 00            [12]  550 	mov	r3,#0x00
+      000571 43 02 01         [24]  551 	orl	ar2,#0x01
+      000574 80 04            [24]  552 	sjmp	00107$
+      000576                        553 00106$:
+      000576 8C 02            [24]  554 	mov	ar2,r4
+      000578 7B 00            [12]  555 	mov	r3,#0x00
+      00057A                        556 00107$:
+      00057A 8A 06            [24]  557 	mov	ar6,r2
+                                    558 ;	./src/chip.c:94: SPI_SCK = 0;
+                                    559 ;	assignBit
+      00057C C2 82            [12]  560 	clr	_P0_2
+                                    561 ;	./src/chip.c:95: delay_10us();
+      00057E C0 07            [24]  562 	push	ar7
+      000580 C0 06            [24]  563 	push	ar6
+      000582 C0 05            [24]  564 	push	ar5
+      000584 12 04 08         [24]  565 	lcall	_delay_10us
+      000587 D0 05            [24]  566 	pop	ar5
+      000589 D0 06            [24]  567 	pop	ar6
+      00058B D0 07            [24]  568 	pop	ar7
+                                    569 ;	./src/chip.c:81: for (spi_cnt = 0; spi_cnt < 8; spi_cnt ++) {
+      00058D 0D               [12]  570 	inc	r5
+      00058E BD 08 00         [24]  571 	cjne	r5,#0x08,00127$
+      000591                        572 00127$:
+      000591 40 A7            [24]  573 	jc	00102$
+                                    574 ;	./src/chip.c:99: return spi_r_buf;
+      000593 8E 82            [24]  575 	mov	dpl,r6
+                                    576 ;	./src/chip.c:100: }
+      000595 22               [24]  577 	ret
+                                    578 	.area CSEG    (CODE)
+                                    579 	.area CONST   (CODE)
+                                    580 	.area XINIT   (CODE)
+                                    581 	.area CABS    (ABS,CODE)
