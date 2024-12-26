@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "oled_i2c.h": "c",
+        "delay.h": "c",
+        "param.h": "c"
+    }
+}
